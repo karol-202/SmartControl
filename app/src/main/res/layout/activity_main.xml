@@ -11,10 +11,9 @@
 		android:id="@+id/toolbar"
 		layout="@layout/toolbar" />
 	
-	<RelativeLayout
+	<ListView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:padding="16dp">
-		
-	</RelativeLayout>
+		android:id="@+id/list_behaviours" />
+
 </LinearLayout>
