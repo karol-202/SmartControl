@@ -30,6 +30,14 @@ public class ActivityMain extends AppCompatActivity
 		setSupportActionBar(toolbar);
 		
 		listView = (ListView) findViewById(R.id.list_behaviours);
+		//listView.setOnItemClickListener((adapter, view, position, id) -> editBehaviour(position));
 		listView.setAdapter(listAdapter);
 	}
+	
+	/*private void editBehaviour(int position)
+	{
+		Intent intent = new Intent(this, ActivityEditBehaviour.class);
+		intent.putExtra("behaviourId", position);
+		startActivity(intent);
+	}*/
 }

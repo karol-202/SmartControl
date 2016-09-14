@@ -41,6 +41,11 @@ public class AdapterBehavioursList extends ArrayAdapter<Behaviour>
 		
 		Switch switchEnabled = (Switch) view.findViewById(R.id.switch_behaviour_enabled);
 		switchEnabled.setChecked(item.isEnabled());
+		switchEnabled.setOnCheckedChangeListener((button, checked) ->
+		{
+			item.setEnabled(checked);
+			BehavioursManager.saveBehaviours();
+		});
 		
 		return view;
 	}
