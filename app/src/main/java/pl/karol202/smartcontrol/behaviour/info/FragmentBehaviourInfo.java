@@ -12,17 +12,17 @@ import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 
 public class FragmentBehaviourInfo extends Fragment
 {
-	private ListView listBehaviourInfo;
-	
 	private Behaviour behaviour;
+	
+	private ListView listBehaviourInfo;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		//int behaviourId = getArguments().getInt("behaviourId");
+		int behaviourId = getArguments().getInt("behaviourId");
 		
-		//behaviour = BehavioursManager.getBehaviours().get(behaviourId);
+		behaviour = BehavioursManager.getBehaviours().get(behaviourId);
 	}
 	
 	@Override
@@ -33,12 +33,7 @@ public class FragmentBehaviourInfo extends Fragment
 		
 		listBehaviourInfo = (ListView) view.findViewById(R.id.list_behaviour_info);
 		listBehaviourInfo.setAdapter(adapter);
+		listBehaviourInfo.setOnItemClickListener(adapter);
 		return view;
-	}
-	
-	public FragmentBehaviourInfo setBehaviourId(int behaviourId)
-	{
-		behaviour = BehavioursManager.getBehaviours().get(behaviourId);
-		return this;
 	}
 }

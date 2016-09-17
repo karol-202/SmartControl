@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="72dp"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp">
 	
-	<TextView
+	<LinearLayout
+		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="New Text"
-		android:id="@+id/text_behaviour_name"
-		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true"
-		android:layout_alignParentRight="true"
-		android:textSize="16sp" />
-	
-	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="New Text"
-		android:id="@+id/text_behaviour_name_value"
-		android:layout_below="@+id/text_behaviour_name"
-		android:layout_alignParentLeft="true"
-		android:layout_alignParentStart="true"
-		android:layout_alignParentRight="true"
-		android:layout_alignParentEnd="true"
-		android:textSize="12sp" />
+		android:layout_centerVertical="true">
+		
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/text_behaviour_name"
+			android:textSize="16sp"
+			android:textColor="#000000" />
+		
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="26dp"
+			android:id="@+id/text_behaviour_name_value"
+			android:textSize="12sp" />
+	</LinearLayout>
 </RelativeLayout>

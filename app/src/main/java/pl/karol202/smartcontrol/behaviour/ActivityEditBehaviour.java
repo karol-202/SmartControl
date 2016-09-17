@@ -11,6 +11,8 @@ import pl.karol202.smartcontrol.activity.ActivityWithToolbar;
 
 public class ActivityEditBehaviour extends ActivityWithToolbar
 {
+	//private Behaviour behaviour;
+	
 	private ViewPager viewPager;
 	private TabLayout tabLayout;
 	
@@ -20,7 +22,9 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_behaviour);
 		createToolbar(true);
+		
 		int behaviourId = getIntent().getIntExtra("behaviourId", -1);
+		if(behaviourId == -1) throw new RuntimeException("behaviourId not passed to ActivityEditBehaviour.");
 		
 		viewPager = (ViewPager) findViewById(R.id.viewPager_behaviour);
 		AdapterBehaviourTabs adapter = new AdapterBehaviourTabs(getFragmentManager(), this, behaviourId);
