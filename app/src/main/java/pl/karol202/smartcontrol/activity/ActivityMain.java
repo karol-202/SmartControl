@@ -35,9 +35,16 @@ public class ActivityMain extends ActivityWithToolbar
 		listView.setOnItemClickListener((adapter, view, position, id) -> editBehaviour(position));
 	}
 	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		listAdapter.notifyDataSetChanged();
+	}
+	
 	private void editBehaviour(int position)
 	{
-		Intent intent = new Intent(ActivityMain.this, ActivityEditBehaviour.class);
+		Intent intent = new Intent(this, ActivityEditBehaviour.class);
 		intent.putExtra("behaviourId", position);
 		startActivity(intent);
 	}

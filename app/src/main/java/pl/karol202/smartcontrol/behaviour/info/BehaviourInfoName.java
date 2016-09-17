@@ -9,15 +9,18 @@ import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.behaviour.OnBehaviourChangeListener;
 
 public class BehaviourInfoName extends BehaviourInfoProperty
 {
 	private Context context;
+	private OnBehaviourChangeListener listener;
 	
-	public BehaviourInfoName(Behaviour behaviour, Context context)
+	public BehaviourInfoName(Behaviour behaviour, Context context, OnBehaviourChangeListener listener)
 	{
 		super(behaviour);
 		this.context = context;
+		this.listener = listener;
 	}
 	
 	@Override
@@ -52,6 +55,7 @@ public class BehaviourInfoName extends BehaviourInfoProperty
 		builder.setPositiveButton(R.string.button_positive_dialog_behaviour_name, (dialog, which) -> {
 			behaviour.setName(editText.getText().toString());
 			BehavioursManager.saveBehaviours();
+			listener.onBehaviourChange();
 		});
 		builder.setNegativeButton(R.string.button_negative_dialog_behaviour_name, null);
 		builder.show();

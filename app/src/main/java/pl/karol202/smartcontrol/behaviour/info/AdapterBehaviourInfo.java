@@ -7,10 +7,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
+import pl.karol202.smartcontrol.behaviour.OnBehaviourChangeListener;
 
 import java.util.ArrayList;
 
-public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnItemClickListener
+public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnItemClickListener, OnBehaviourChangeListener
 {
 	private Context context;
 	private ArrayList<BehaviourInfoProperty> properties;
@@ -19,7 +20,7 @@ public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnI
 	{
 		this.context = context;
 		this.properties = new ArrayList<>();
-		this.properties.add(new BehaviourInfoName(behaviour, context));
+		this.properties.add(new BehaviourInfoName(behaviour, context, this));
 	}
 	
 	@Override
@@ -60,5 +61,11 @@ public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnI
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
 		((BehaviourInfoProperty) getItem(position)).onItemClick();
+	}
+	
+	@Override
+	public void onBehaviourChange()
+	{
+		notifyDataSetChanged();
 	}
 }
