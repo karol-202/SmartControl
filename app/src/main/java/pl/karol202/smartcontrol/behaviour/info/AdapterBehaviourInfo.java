@@ -21,6 +21,7 @@ public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnI
 		this.context = context;
 		this.properties = new ArrayList<>();
 		this.properties.add(new BehaviourInfoName(behaviour, context, this));
+		this.properties.add(new BehaviourInfoEnabled(behaviour, context));
 	}
 	
 	@Override
@@ -46,11 +47,11 @@ public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnI
 	{
 		View view;
 		BehaviourInfoProperty property = (BehaviourInfoProperty) getItem(position);
-		if(convertView == null)
+		if(convertView == null || !(convertView.getTag().getClass().equals(property.getClass())))
 		{
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			int layout = property.getLayout();
-			view = inflater.inflate(layout, parent, false);
+			view = inflater.inflate(property.getLayout(), parent, false);
+			view.setTag(property);
 		}
 		else view = convertView;
 		property.initView(view);

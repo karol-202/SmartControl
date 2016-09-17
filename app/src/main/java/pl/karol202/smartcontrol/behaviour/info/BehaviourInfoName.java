@@ -32,9 +32,6 @@ public class BehaviourInfoName extends BehaviourInfoProperty
 	@Override
 	public void initView(View view)
 	{
-		TextView textInfo = (TextView) view.findViewById(R.id.text_behaviour_name);
-		textInfo.setText(R.string.behaviour_name);
-		
 		TextView textValue = (TextView) view.findViewById(R.id.text_behaviour_name_value);
 		textValue.setText(behaviour.getName());
 	}

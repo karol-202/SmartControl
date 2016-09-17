@@ -15,4 +15,5 @@
 	<string name="tab_info">Info</string>
 	
 	<string name="behaviour_name">Nazwa zachowania</string>
+	<string name="behaviour_enabled">Zachowanie włączone</string>
 </resources>
