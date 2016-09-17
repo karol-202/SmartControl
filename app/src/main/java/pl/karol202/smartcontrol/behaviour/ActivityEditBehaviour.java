@@ -1,5 +1,6 @@
 package pl.karol202.smartcontrol.behaviour;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,7 @@ import pl.karol202.smartcontrol.activity.ActivityWithToolbar;
 
 public class ActivityEditBehaviour extends ActivityWithToolbar
 {
-	//private Behaviour behaviour;
+	private int behaviourId;
 	
 	private ViewPager viewPager;
 	private TabLayout tabLayout;
@@ -23,8 +24,13 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 		setContentView(R.layout.activity_edit_behaviour);
 		createToolbar(true);
 		
-		int behaviourId = getIntent().getIntExtra("behaviourId", -1);
-		if(behaviourId == -1) throw new RuntimeException("behaviourId not passed to ActivityEditBehaviour.");
+		behaviourId = getIntent().getIntExtra("behaviourId", -1);
+		if(behaviourId == -1)
+		{
+			behaviourId = BehavioursManager.getBehaviours().size();
+			BehavioursManager.getBehaviours().add(new Behaviour().defaultBehaviour());
+			BehavioursManager.saveBehaviours();
+		}
 		
 		viewPager = (ViewPager) findViewById(R.id.viewPager_behaviour);
 		AdapterBehaviourTabs adapter = new AdapterBehaviourTabs(getFragmentManager(), this, behaviourId);
@@ -47,11 +53,25 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 	{
 		switch(item.getItemId())
 		{
-		case R.id.item_behaviour_apply:
+		case R.id.item_behaviour_delete:
+			showDeleteDialog();
 			break;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 		return true;
+	}
+	
+	private void showDeleteDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.message_dialog_behaviour_delete);
+		builder.setPositiveButton(R.string.button_positive_dialog_behaviour_delete, (dialog, which) -> {
+			BehavioursManager.getBehaviours().remove(behaviourId);
+			BehavioursManager.saveBehaviours();
+			ActivityEditBehaviour.this.finish();
+		});
+		builder.setNegativeButton(R.string.button_negative_dialog_behaviour_delete, null);
+		builder.show();
 	}
 }

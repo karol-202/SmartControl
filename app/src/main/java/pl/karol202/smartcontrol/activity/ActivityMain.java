@@ -2,14 +2,17 @@ package pl.karol202.smartcontrol.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import pl.karol202.smartcontrol.behaviour.AdapterBehavioursList;
+import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.ActivityEditBehaviour;
+import pl.karol202.smartcontrol.behaviour.AdapterBehavioursList;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
-import pl.karol202.smartcontrol.R;
 
 public class ActivityMain extends ActivityWithToolbar
 {
@@ -40,6 +43,28 @@ public class ActivityMain extends ActivityWithToolbar
 	{
 		super.onResume();
 		listAdapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_activity_main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch(item.getItemId())
+		{
+		case R.id.item_behaviour_add:
+			editBehaviour(-1);
+			break;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return true;
 	}
 	
 	private void editBehaviour(int position)

@@ -17,7 +17,6 @@ public class BehavioursManager
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		editor = prefs.edit();
 		loadBehaviours();
-		if(behaviours.size() == 0) behaviours.add(new Behaviour("Zachowanie 1", 0, true));
 	}
 	
 	private static void loadBehaviours()

@@ -3,10 +3,14 @@
 	<string name="title_activity_edit_behaviour">Edytuj zachowanie</string>
 	
 	<string name="title_dialog_behaviour_name">Zmień nazwę zachowania</string>
-	<string name="button_positive_dialog_behaviour_name">OK</string>
+	<string name="button_positive_dialog_behaviour_name">Zmień nazwę</string>
 	<string name="button_negative_dialog_behaviour_name">Anuluj</string>
+	<string name="message_dialog_behaviour_delete">Czy na pewno chcesz usunąć to zachowanie?</string>
+	<string name="button_positive_dialog_behaviour_delete">Usuń</string>
+	<string name="button_negative_dialog_behaviour_delete">Anuluj</string>
 	
-	<string name="item_behaviour_apply">Gotowe</string>
+	<string name="item_behaviour_add">Dodaj zachowanie</string>
+	<string name="item_behaviour_delete">Usuń zachowanie</string>
 	
 	<string name="tab_info">Info</string>
 	

@@ -20,6 +20,14 @@ public class Behaviour
 		this.enabled = enabled;
 	}
 	
+	public Behaviour defaultBehaviour()
+	{
+		this.name = "Nowe zachowanie";
+		this.icon = 0;
+		this.enabled = true;
+		return this;
+	}
+	
 	public static Behaviour loadBehaviour(SharedPreferences prefs, int behaviourId)
 	{
 		Behaviour behaviour = new Behaviour();
