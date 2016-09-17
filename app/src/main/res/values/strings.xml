@@ -2,5 +2,13 @@
 	<string name="app_name">Smart Control</string>
 	<string name="title_activity_edit_behaviour">Edytuj zachowanie</string>
 	
+	<string name="title_dialog_behaviour_name">Zmień nazwę zachowania</string>
+	<string name="button_positive_dialog_behaviour_name">OK</string>
+	<string name="button_negative_dialog_behaviour_name">Anuluj</string>
+	
 	<string name="item_behaviour_apply">Gotowe</string>
+	
+	<string name="tab_info">Info</string>
+	
+	<string name="behaviour_name">Nazwa zachowania</string>
 </resources>

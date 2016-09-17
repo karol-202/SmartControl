@@ -1,4 +1,4 @@
-package pl.karol202.smartcontrol;
+package pl.karol202.smartcontrol.behaviour;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import pl.karol202.smartcontrol.R;
 
 import java.util.ArrayList;
 

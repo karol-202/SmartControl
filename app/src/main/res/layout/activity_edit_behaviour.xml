@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical"
-	tools:context=".ActivityEditBehaviour">
+	tools:context=".behaviour.ActivityEditBehaviour">
 	
-	<include
-		android:id="@+id/toolbar"
-		layout="@layout/toolbar" />
-	
-	<RelativeLayout
+	<android.support.design.widget.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 		
+		<include
+			android:id="@+id/toolbar"
+			layout="@layout/toolbar" />
 		
-	</RelativeLayout>
-</LinearLayout>
+		<android.support.design.widget.TabLayout
+			android:id="@+id/toolbar_tabs"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:tabMode="fixed"
+			app:tabGravity="fill"/>
+	</android.support.design.widget.AppBarLayout>
+	
+	<android.support.v4.view.ViewPager
+		android:id="@+id/viewPager_behaviour"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+</android.support.design.widget.CoordinatorLayout>

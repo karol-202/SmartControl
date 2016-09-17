@@ -1,4 +1,4 @@
-package pl.karol202.smartcontrol;
+package pl.karol202.smartcontrol.behaviour;
 
 import android.content.SharedPreferences;
 

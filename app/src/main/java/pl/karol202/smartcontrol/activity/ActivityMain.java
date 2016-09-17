@@ -1,10 +1,15 @@
-package pl.karol202.smartcontrol;
+package pl.karol202.smartcontrol.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import pl.karol202.smartcontrol.behaviour.AdapterBehavioursList;
+import pl.karol202.smartcontrol.behaviour.ActivityEditBehaviour;
+import pl.karol202.smartcontrol.behaviour.Behaviour;
+import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.R;
 
 public class ActivityMain extends ActivityWithToolbar
 {
