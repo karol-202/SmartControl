@@ -21,6 +21,7 @@ public class AdapterBehaviourInfo extends BaseAdapter implements AdapterView.OnI
 		this.context = context;
 		this.properties = new ArrayList<>();
 		this.properties.add(new BehaviourInfoName(behaviour, context, this));
+		this.properties.add(new BehaviourInfoIcon(behaviour, context, this));
 		this.properties.add(new BehaviourInfoEnabled(behaviour, context));
 	}
 	
