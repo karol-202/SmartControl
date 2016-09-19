@@ -1,6 +1,7 @@
 <resources>
 	<string name="app_name">Smart Control</string>
 	<string name="title_activity_edit_behaviour">Edytuj zachowanie</string>
+	<string name="title_activity_edit_condition">Warunek: </string>
 	
 	<string name="title_dialog_behaviour_name">Zmień nazwę zachowania</string>
 	<string name="button_positive_dialog_behaviour_name">Zmień nazwę</string>
@@ -12,8 +13,10 @@
 	
 	<string name="item_behaviour_add">Dodaj zachowanie</string>
 	<string name="item_behaviour_delete">Usuń zachowanie</string>
+	<string name="item_condition_add">Dodaj warunek</string>
 	
 	<string name="tab_info">Info</string>
+	<string name="tab_conditions">Warunki</string>
 	
 	<string name="behaviour_name">Nazwa zachowania</string>
 	<string name="behaviour_icon">Ikona</string>
