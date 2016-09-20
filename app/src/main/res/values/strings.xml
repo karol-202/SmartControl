@@ -30,4 +30,6 @@
 	<string name="condition_time_name">Przedział czasowy</string>
 	
 	<string name="text_condition_type">Warunek: %1s</string>
+	<string name="text_condition_time_since">Od: </string>
+	<string name="text_condition_time_to">Do: </string>
 </resources>
