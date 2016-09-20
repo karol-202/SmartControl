@@ -75,6 +75,8 @@ public class Behaviour
 		editor.putInt(header + "conditionsLength", conditions.size());
 		for(int i = 0; i < conditions.size(); i++)
 		{
+			Condition condition = conditions.get(i);
+			editor.putInt(header + "condition" + i + "type", condition.getConditionType().getId());
 			conditions.get(i).saveCondition(editor, behaviourId, i);
 		}
 	}
@@ -109,14 +111,19 @@ public class Behaviour
 		this.enabled = enabled;
 	}
 	
-	public void addCondition(Condition conditions)
+	public void addCondition(Condition condition)
 	{
-		this.conditions.add(conditions);
+		this.conditions.add(condition);
 	}
 	
 	public Condition getCondition(int position)
 	{
 		return conditions.get(position);
+	}
+	
+	public void removeCondition(int conditionId)
+	{
+		this.conditions.remove(conditionId);
 	}
 	
 	public int getConditionsLength()

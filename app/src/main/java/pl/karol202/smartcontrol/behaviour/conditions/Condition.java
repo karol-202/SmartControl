@@ -6,11 +6,15 @@ public interface Condition
 {
 	int CONDITION_TIME = 0;
 	
-	String getName();
+	ConditionType getConditionType();
+	
+	int getName();
 	
 	int getIcon();
 	
 	String getInfo();
+	
+	Class<? extends ActivityEditCondition> getEditActivity();
 	
 	void loadCondition(SharedPreferences prefs, int behaviourId, int conditionId);
 	

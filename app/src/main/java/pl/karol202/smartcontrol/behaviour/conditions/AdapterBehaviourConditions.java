@@ -12,8 +12,14 @@ import pl.karol202.smartcontrol.behaviour.Behaviour;
 
 public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBehaviourConditions.ViewHolder>
 {
+	public interface OnItemClickListener
+	{
+		void onItemClick(int position);
+	}
+	
 	public class ViewHolder extends RecyclerView.ViewHolder
 	{
+		private int position;
 		private ImageView imageIcon;
 		private TextView textName;
 		private TextView textInfo;
@@ -21,13 +27,15 @@ public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBeha
 		public ViewHolder(View view)
 		{
 			super(view);
+			view.setOnClickListener(v -> listener.onItemClick(position));
 			imageIcon = (ImageView) view.findViewById(R.id.image_condition_icon);
 			textName = (TextView) view.findViewById(R.id.text_condition_name);
 			textInfo = (TextView) view.findViewById(R.id.text_condition_info);
 		}
 		
-		public void bind(Condition condition)
+		public void bind(int position, Condition condition)
 		{
+			this.position = position;
 			imageIcon.setImageResource(condition.getIcon());
 			textName.setText(condition.getName());
 			textInfo.setText(condition.getInfo());
@@ -36,11 +44,13 @@ public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBeha
 	
 	private Context context;
 	private Behaviour behaviour;
+	private OnItemClickListener listener;
 	
-	public AdapterBehaviourConditions(Context context, Behaviour behaviour)
+	public AdapterBehaviourConditions(Context context, Behaviour behaviour, OnItemClickListener listener)
 	{
 		this.context = context;
 		this.behaviour = behaviour;
+		this.listener = listener;
 	}
 	
 	@Override
@@ -54,7 +64,7 @@ public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBeha
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		holder.bind(behaviour.getCondition(position));
+		holder.bind(position, behaviour.getCondition(position));
 	}
 	
 	@Override

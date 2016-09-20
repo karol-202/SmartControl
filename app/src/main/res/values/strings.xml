@@ -1,7 +1,7 @@
 <resources>
 	<string name="app_name">Smart Control</string>
 	<string name="title_activity_edit_behaviour">Edytuj zachowanie</string>
-	<string name="title_activity_edit_condition">Warunek: </string>
+	<string name="title_activity_edit_condition">Edytuj warunek</string>
 	
 	<string name="title_dialog_behaviour_name">Zmień nazwę zachowania</string>
 	<string name="button_positive_dialog_behaviour_name">Zmień nazwę</string>
@@ -10,10 +10,15 @@
 	<string name="button_positive_dialog_behaviour_delete">Usuń</string>
 	<string name="button_negative_dialog_behaviour_delete">Anuluj</string>
 	<string name="title_dialog_behaviour_icon">Wybierz ikonę</string>
+	<string name="title_dialog_condition_type">Wybierz warunek</string>
+	<string name="message_dialog_condition_delete">Czy na pewno chcesz usunąć ten warunek?</string>
+	<string name="button_positive_dialog_condition_delete">Usuń</string>
+	<string name="button_negative_dialog_condition_delete">Anuluj</string>
 	
 	<string name="item_behaviour_add">Dodaj zachowanie</string>
 	<string name="item_behaviour_delete">Usuń zachowanie</string>
 	<string name="item_condition_add">Dodaj warunek</string>
+	<string name="item_condition_delete">Usuń warunek</string>
 	
 	<string name="tab_info">Info</string>
 	<string name="tab_conditions">Warunki</string>
@@ -21,4 +26,8 @@
 	<string name="behaviour_name">Nazwa zachowania</string>
 	<string name="behaviour_icon">Ikona</string>
 	<string name="behaviour_enabled">Zachowanie włączone</string>
+	
+	<string name="condition_time_name">Przedział czasowy</string>
+	
+	<string name="text_condition_type">Warunek: %1s</string>
 </resources>

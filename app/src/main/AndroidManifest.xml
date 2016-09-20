@@ -18,7 +18,7 @@
 		<activity android:name=".behaviour.ActivityEditBehaviour"
 			android:label="@string/title_activity_edit_behaviour">
 		</activity>
-		<activity android:name=".behaviour.conditions.ActivityEditCondition"
+		<activity android:name=".behaviour.conditions.ActivityEditConditionTime"
 			android:label="@string/title_activity_edit_condition">
 		</activity>
 	</application>

@@ -5,21 +5,33 @@ import android.content.SharedPreferences;
 public class ConditionTime implements Condition
 {
 	@Override
-	public String getName()
+	public ConditionType getConditionType()
 	{
-		return null;
+		return ConditionType.TIME;
+	}
+	
+	@Override
+	public int getName()
+	{
+		return getConditionType().getName();
 	}
 	
 	@Override
 	public int getIcon()
 	{
-		return 0;
+		return getConditionType().getIcon();
 	}
 	
 	@Override
 	public String getInfo()
 	{
-		return null;
+		return "";
+	}
+	
+	@Override
+	public Class<? extends ActivityEditCondition> getEditActivity()
+	{
+		return getConditionType().getEditActivity();
 	}
 	
 	@Override
