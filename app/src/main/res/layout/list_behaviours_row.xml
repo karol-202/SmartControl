@@ -4,7 +4,10 @@
 	android:layout_height="72dp"
 	android:paddingLeft="16dp"
 	android:paddingRight="16dp"
-	android:descendantFocusability="blocksDescendants">
+	android:descendantFocusability="blocksDescendants"
+	android:clickable="true"
+	android:focusable="true"
+	android:background="?android:attr/selectableItemBackground">
 	
 	<ImageView
 		android:layout_width="40dp"

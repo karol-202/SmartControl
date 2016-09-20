@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
@@ -11,7 +12,7 @@ import android.widget.ListView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
-import pl.karol202.smartcontrol.behaviour.conditions.AdapterBehaviourConditions.OnItemClickListener;
+import pl.karol202.smartcontrol.util.ItemDecorationDivider;
 
 public class FragmentBehaviourConditions extends Fragment
 {
@@ -20,6 +21,7 @@ public class FragmentBehaviourConditions extends Fragment
 	private AdapterBehaviourConditions adapter;
 	
 	private RecyclerView recyclerView;
+	private FloatingActionButton fab;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -34,12 +36,15 @@ public class FragmentBehaviourConditions extends Fragment
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_behaviour_conditions, container, false);
-		OnItemClickListener listener = this::editCondition;
-		adapter = new AdapterBehaviourConditions(getActivity(), behaviour, listener);
+		adapter = new AdapterBehaviourConditions(getActivity(), behaviour, this::editCondition);
 		
 		recyclerView = (RecyclerView) view.findViewById(R.id.recycler_behaviour_conditions);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.setAdapter(adapter);
+		recyclerView.addItemDecoration(new ItemDecorationDivider(getActivity()));
+		
+		fab = (FloatingActionButton) view.findViewById(R.id.fab_add_condition);
+		fab.setOnClickListener(v -> newCondition());
 		return view;
 	}
 	
@@ -48,27 +53,6 @@ public class FragmentBehaviourConditions extends Fragment
 	{
 		super.onResume();
 		adapter.notifyDataSetChanged();
-	}
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_fragment_behaviour_conditions, menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		switch(item.getItemId())
-		{
-		case R.id.item_condition_add:
-			newCondition();
-			break;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-		return true;
 	}
 	
 	private void newCondition()

@@ -7,16 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import pl.karol202.smartcontrol.util.OnItemClickListener;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 
 public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBehaviourConditions.ViewHolder>
 {
-	public interface OnItemClickListener
-	{
-		void onItemClick(int position);
-	}
-	
 	public class ViewHolder extends RecyclerView.ViewHolder
 	{
 		private int position;
