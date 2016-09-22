@@ -11,16 +11,16 @@ import pl.karol202.smartcontrol.util.OnItemClickListener;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 
-public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBehaviourConditions.ViewHolder>
+public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBehaviourConditions.ViewHolderConditions>
 {
-	public class ViewHolder extends RecyclerView.ViewHolder
+	public class ViewHolderConditions extends RecyclerView.ViewHolder
 	{
 		private int position;
 		private ImageView imageIcon;
 		private TextView textName;
 		private TextView textInfo;
 		
-		public ViewHolder(View view)
+		public ViewHolderConditions(View view)
 		{
 			super(view);
 			view.setOnClickListener(v -> listener.onItemClick(position));
@@ -50,15 +50,15 @@ public class AdapterBehaviourConditions extends RecyclerView.Adapter<AdapterBeha
 	}
 	
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+	public ViewHolderConditions onCreateViewHolder(ViewGroup parent, int viewType)
 	{
 		View view = LayoutInflater.from(context).inflate(R.layout.list_behaviour_condition_row, parent, false);
-		ViewHolder holder = new ViewHolder(view);
+		ViewHolderConditions holder = new ViewHolderConditions(view);
 		return holder;
 	}
 	
 	@Override
-	public void onBindViewHolder(ViewHolder holder, int position)
+	public void onBindViewHolder(ViewHolderConditions holder, int position)
 	{
 		holder.bind(position, behaviour.getCondition(position));
 	}

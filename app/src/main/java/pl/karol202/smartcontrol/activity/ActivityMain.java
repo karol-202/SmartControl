@@ -29,7 +29,6 @@ public class ActivityMain extends ActivityWithToolbar
 		BehavioursManager.init(this);
 		
 		firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-		
 		adapter = new AdapterBehaviours(this, this::editBehaviour);
 		
 		recyclerView = (RecyclerView) findViewById(R.id.recycler_behaviours);

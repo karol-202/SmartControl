@@ -26,10 +26,11 @@
 	<string name="behaviour_name">Nazwa zachowania</string>
 	<string name="behaviour_icon">Ikona</string>
 	<string name="behaviour_enabled">Zachowanie włączone</string>
+	<string name="condition_type">Warunek</string>
+	<string name="condition_time_start">Czas rozpoczęcia</string>
+	<string name="condition_time_end">Czas zakończenia</string>
+	<string name="condition_time_precise">Wysoka dokładność</string>
+	<string name="condition_time_precise_info">Może nieznacznie zwiększyć zużycie baterii</string>
 	
 	<string name="condition_time_name">Przedział czasowy</string>
-	
-	<string name="text_condition_type">Warunek: %1s</string>
-	<string name="text_condition_time_since">Od: </string>
-	<string name="text_condition_time_to">Do: </string>
 </resources>

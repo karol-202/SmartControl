@@ -13,13 +13,11 @@ import pl.karol202.smartcontrol.behaviour.OnBehaviourChangeListener;
 
 public class BehaviourInfoName extends BehaviourInfoProperty
 {
-	private Context context;
 	private OnBehaviourChangeListener listener;
 	
 	public BehaviourInfoName(Behaviour behaviour, Context context, OnBehaviourChangeListener listener)
 	{
-		super(behaviour);
-		this.context = context;
+		super(behaviour, context);
 		this.listener = listener;
 	}
 	

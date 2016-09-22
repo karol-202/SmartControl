@@ -1,12 +1,16 @@
-package pl.karol202.smartcontrol.behaviour.conditions;
+package pl.karol202.smartcontrol.behaviour.conditions.time;
 
 import android.content.SharedPreferences;
+import pl.karol202.smartcontrol.behaviour.conditions.ActivityEditCondition;
+import pl.karol202.smartcontrol.behaviour.conditions.Condition;
+import pl.karol202.smartcontrol.behaviour.conditions.ConditionType;
 import pl.karol202.smartcontrol.util.Time;
 
 public class ConditionTime implements Condition
 {
 	private Time startTime;
 	private Time endTime;
+	private boolean precise;
 	
 	@Override
 	public ConditionType getConditionType()
@@ -50,6 +54,8 @@ public class ConditionTime implements Condition
 		int endHour = prefs.getInt(header + "endHour", 0);
 		int endMinute = prefs.getInt(header + "endMinute", 0);
 		endTime = new Time(endHour, endMinute);
+		
+		precise = prefs.getBoolean(header + "precise", false);
 	}
 	
 	@Override
@@ -61,6 +67,7 @@ public class ConditionTime implements Condition
 		editor.putInt(header + "startMinute", startTime.getMinute());
 		editor.putInt(header + "endHour", endTime.getHour());
 		editor.putInt(header + "endMinute", endTime.getMinute());
+		editor.putBoolean(header + "precise", precise);
 	}
 	
 	public Time getStartTime()
@@ -81,5 +88,15 @@ public class ConditionTime implements Condition
 	public void setEndTime(Time endTime)
 	{
 		this.endTime = endTime;
+	}
+	
+	public boolean isPrecise()
+	{
+		return precise;
+	}
+	
+	public void setPrecise(boolean precise)
+	{
+		this.precise = precise;
 	}
 }

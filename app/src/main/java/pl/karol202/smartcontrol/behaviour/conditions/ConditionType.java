@@ -1,6 +1,7 @@
 package pl.karol202.smartcontrol.behaviour.conditions;
 
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.conditions.time.ActivityEditConditionTime;
 
 public enum ConditionType
 {

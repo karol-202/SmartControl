@@ -37,7 +37,7 @@ public class Time
 	@Override
 	public String toString()
 	{
-		DateFormat format = DateFormat.getTimeInstance();
+		DateFormat format = DateFormat.getTimeInstance(DateFormat.SHORT);
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, minute);

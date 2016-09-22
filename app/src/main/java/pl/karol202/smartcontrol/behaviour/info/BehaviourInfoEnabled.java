@@ -9,12 +9,9 @@ import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 
 public class BehaviourInfoEnabled extends BehaviourInfoProperty
 {
-	private Context context;
-	
 	public BehaviourInfoEnabled(Behaviour behaviour, Context context)
 	{
-		super(behaviour);
-		this.context = context;
+		super(behaviour, context);
 	}
 	
 	@Override

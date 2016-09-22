@@ -2,7 +2,7 @@ package pl.karol202.smartcontrol.behaviour;
 
 import android.content.SharedPreferences;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
-import pl.karol202.smartcontrol.behaviour.conditions.ConditionTime;
+import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 
 import java.util.ArrayList;
 
