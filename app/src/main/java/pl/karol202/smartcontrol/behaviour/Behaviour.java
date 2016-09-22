@@ -81,6 +81,16 @@ public class Behaviour
 		}
 	}
 	
+	public void registerConditions()
+	{
+		for(Condition condition : conditions) condition.registerCondition();
+	}
+	
+	public void unregisterConditions()
+	{
+		for(Condition condition : conditions) condition.unregisterCondition();
+	}
+	
 	public String getName()
 	{
 		return name;

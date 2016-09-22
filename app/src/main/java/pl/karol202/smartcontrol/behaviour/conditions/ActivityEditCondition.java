@@ -22,7 +22,7 @@ public abstract class ActivityEditCondition extends ActivityWithToolbar
 		super.onCreate(savedInstanceState);
 		behaviourId = getIntent().getIntExtra("behaviourId", -1);
 		conditionId = getIntent().getIntExtra("conditionId", -1);
-		Behaviour behaviour = BehavioursManager.getBehaviours().get(behaviourId);
+		Behaviour behaviour = BehavioursManager.getBehaviour(behaviourId);
 		if(conditionId == -1)
 		{
 			conditionId = behaviour.getConditionsLength();
@@ -58,7 +58,7 @@ public abstract class ActivityEditCondition extends ActivityWithToolbar
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.message_dialog_condition_delete);
 		builder.setPositiveButton(R.string.button_positive_dialog_condition_delete, (dialog, which) -> {
-			BehavioursManager.getBehaviours().get(behaviourId).removeCondition(conditionId);
+			BehavioursManager.getBehaviour(behaviourId).removeCondition(conditionId);
 			BehavioursManager.saveBehaviours();
 			ActivityEditCondition.this.finish();
 		});

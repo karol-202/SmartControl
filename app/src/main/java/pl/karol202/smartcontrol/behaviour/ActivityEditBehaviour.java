@@ -27,8 +27,8 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 		behaviourId = getIntent().getIntExtra("behaviourId", -1);
 		if(behaviourId == -1)
 		{
-			behaviourId = BehavioursManager.getBehaviours().size();
-			BehavioursManager.getBehaviours().add(new Behaviour().defaultBehaviour());
+			behaviourId = BehavioursManager.getBehaviourLength();
+			BehavioursManager.addBehaviour(new Behaviour().defaultBehaviour());
 			BehavioursManager.saveBehaviours();
 		}
 		
@@ -67,7 +67,7 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.message_dialog_behaviour_delete);
 		builder.setPositiveButton(R.string.button_positive_dialog_behaviour_delete, (dialog, which) -> {
-			BehavioursManager.getBehaviours().remove(behaviourId);
+			BehavioursManager.removeBehaviour(behaviourId);
 			BehavioursManager.saveBehaviours();
 			ActivityEditBehaviour.this.finish();
 		});

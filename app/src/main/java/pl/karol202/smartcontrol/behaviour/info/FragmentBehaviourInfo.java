@@ -22,7 +22,7 @@ public class FragmentBehaviourInfo extends Fragment
 		super.onCreate(savedInstanceState);
 		int behaviourId = getArguments().getInt("behaviourId");
 		
-		behaviour = BehavioursManager.getBehaviours().get(behaviourId);
+		behaviour = BehavioursManager.getBehaviour(behaviourId);
 	}
 	
 	@Override

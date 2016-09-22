@@ -29,7 +29,7 @@ public class FragmentBehaviourConditions extends Fragment
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		behaviourId = getArguments().getInt("behaviourId");
-		behaviour = BehavioursManager.getBehaviours().get(behaviourId);
+		behaviour = BehavioursManager.getBehaviour(behaviourId);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.ActivityEditBehaviour;
 import pl.karol202.smartcontrol.behaviour.AdapterBehaviours;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 import pl.karol202.smartcontrol.util.ItemDecorationDivider;
 
 public class ActivityMain extends ActivityWithToolbar
@@ -26,7 +27,10 @@ public class ActivityMain extends ActivityWithToolbar
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		createToolbar(false);
+		
+		ConditionTime.init(this);
 		BehavioursManager.init(this);
+		BehavioursManager.registerConditions();
 		
 		firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 		adapter = new AdapterBehaviours(this, this::editBehaviour);

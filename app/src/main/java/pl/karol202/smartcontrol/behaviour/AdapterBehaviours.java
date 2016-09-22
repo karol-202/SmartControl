@@ -64,12 +64,12 @@ public class AdapterBehaviours extends RecyclerView.Adapter<AdapterBehaviours.Vi
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position)
 	{
-		holder.bind(position, BehavioursManager.getBehaviours().get(position));
+		holder.bind(position, BehavioursManager.getBehaviour(position));
 	}
 	
 	@Override
 	public int getItemCount()
 	{
-		return BehavioursManager.getBehaviours().size();
+		return BehavioursManager.getBehaviourLength();
 	}
 }

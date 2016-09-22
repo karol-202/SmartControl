@@ -32,8 +32,28 @@ public class BehavioursManager
 		editor.commit();
 	}
 	
-	public static ArrayList<Behaviour> getBehaviours()
+	public static void registerConditions()
 	{
-		return behaviours;
+		for(Behaviour behaviour : behaviours) behaviour.registerConditions();
+	}
+	
+	public static void addBehaviour(Behaviour behaviour)
+	{
+		behaviours.add(behaviour);
+	}
+	
+	public static Behaviour getBehaviour(int position)
+	{
+		return behaviours.get(position);
+	}
+	
+	public static void removeBehaviour(int position)
+	{
+		behaviours.remove(position);
+	}
+	
+	public static int getBehaviourLength()
+	{
+		return behaviours.size();
 	}
 }

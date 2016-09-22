@@ -16,6 +16,10 @@ public interface Condition
 	
 	Class<? extends ActivityEditCondition> getEditActivity();
 	
+	void registerCondition();
+	
+	void unregisterCondition();
+	
 	void loadCondition(SharedPreferences prefs, int behaviourId, int conditionId);
 	
 	//Save condition including the condition#Type

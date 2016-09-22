@@ -8,6 +8,7 @@
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
+		
 		<activity android:name=".activity.ActivityMain"
 			android:label="@string/app_name">
 			<intent-filter>
@@ -21,5 +22,7 @@
 		<activity android:name=".behaviour.conditions.time.ActivityEditConditionTime"
 			android:label="@string/title_activity_edit_condition">
 		</activity>
+		
+		<receiver android:name=".behaviour.conditions.time.ConditionTime$ConditionTimeReceiver"/>
 	</application>
 </manifest>

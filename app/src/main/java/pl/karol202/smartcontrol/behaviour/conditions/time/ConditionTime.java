@@ -1,16 +1,46 @@
 package pl.karol202.smartcontrol.behaviour.conditions.time;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 import pl.karol202.smartcontrol.behaviour.conditions.ActivityEditCondition;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.ConditionType;
 import pl.karol202.smartcontrol.util.Time;
 
+import java.util.Calendar;
+
 public class ConditionTime implements Condition
 {
+	public static class ConditionTimeReceiver extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			Toast.makeText(context, "To działa!", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	private static Context context;
+	private static AlarmManager alarmManager;
+	
 	private Time startTime;
 	private Time endTime;
 	private boolean precise;
+	
+	private boolean registered;
+	private PendingIntent piStart;
+	private PendingIntent piEnd;
+	
+	public static void init(Context context)
+	{
+		ConditionTime.context = context;
+		ConditionTime.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+	}
 	
 	@Override
 	public ConditionType getConditionType()
@@ -40,6 +70,39 @@ public class ConditionTime implements Condition
 	public Class<? extends ActivityEditCondition> getEditActivity()
 	{
 		return getConditionType().getEditActivity();
+	}
+	
+	@Override
+	public void registerCondition()
+	{
+		Intent intentStart = new Intent(context, ConditionTimeReceiver.class);
+		//intentStart.putExtra("")
+		piStart = PendingIntent.getBroadcast(context, 0, intentStart, 0);
+		Intent intentEnd = new Intent(context, ConditionTimeReceiver.class);
+		piEnd = PendingIntent.getBroadcast(context, 0, intentEnd, 0);
+		
+		Calendar calStart = Calendar.getInstance();
+		calStart.set(Calendar.HOUR_OF_DAY, startTime.getHour());
+		calStart.set(Calendar.MINUTE, startTime.getMinute());
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.set(Calendar.HOUR_OF_DAY, endTime.getHour());
+		calEnd.set(Calendar.MINUTE, endTime.getMinute());
+		if(precise)
+		{
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piStart);
+			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piEnd);
+		}
+		else
+		{
+			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piStart);
+			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piEnd);
+		}
+	}
+	
+	@Override
+	public void unregisterCondition()
+	{
+		
 	}
 	
 	@Override
