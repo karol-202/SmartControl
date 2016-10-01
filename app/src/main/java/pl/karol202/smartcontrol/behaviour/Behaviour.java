@@ -53,7 +53,7 @@ public class Behaviour
 			switch(type)
 			{
 			case Condition.CONDITION_TIME:
-				condition = new ConditionTime();
+				condition = new ConditionTime(behaviour);
 				break;
 			default:
 				throw new RuntimeException("Error during loading behaviour: invalid condition type " + type + ".");
@@ -83,12 +83,8 @@ public class Behaviour
 	
 	public void registerConditions()
 	{
+		if(!enabled) return;
 		for(Condition condition : conditions) condition.registerCondition();
-	}
-	
-	public void unregisterConditions()
-	{
-		for(Condition condition : conditions) condition.unregisterCondition();
 	}
 	
 	public String getName()
@@ -119,6 +115,8 @@ public class Behaviour
 	public void setEnabled(boolean enabled)
 	{
 		this.enabled = enabled;
+		if(enabled) registerConditions();
+		else for(Condition condition : conditions) condition.unregisterCondition();
 	}
 	
 	public void addCondition(Condition condition)

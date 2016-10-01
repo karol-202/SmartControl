@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.conditions.ActivityEditCondition;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.util.ItemDecorationDivider;
+import pl.karol202.smartcontrol.util.Time;
 import pl.karol202.smartcontrol.util.TimePickerFragment.OnTimeSelectedListener;
 
 public class ActivityEditConditionTime extends ActivityEditCondition implements OnTimeSelectedListener
@@ -35,9 +37,9 @@ public class ActivityEditConditionTime extends ActivityEditCondition implements 
 	}
 	
 	@Override
-	protected Condition createCondition()
+	protected Condition createCondition(Behaviour behaviour)
 	{
-		return new ConditionTime();
+		return new ConditionTime(behaviour, new Time(12, 0), new Time(18, 0), true);
 	}
 	
 	@Override

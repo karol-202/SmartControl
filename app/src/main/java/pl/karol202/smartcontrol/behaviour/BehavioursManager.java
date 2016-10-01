@@ -22,6 +22,7 @@ public class BehavioursManager
 	private static void loadBehaviours()
 	{
 		int length = prefs.getInt("behavioursLength", 0);
+		behaviours.clear();
 		for(int i = 0; i < length; i++) behaviours.add(Behaviour.loadBehaviour(prefs, i));
 	}
 	

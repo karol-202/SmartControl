@@ -28,11 +28,11 @@ public class ActivityMain extends ActivityWithToolbar
 		setContentView(R.layout.activity_main);
 		createToolbar(false);
 		
+		FirebaseAnalytics.getInstance(this);
 		ConditionTime.init(this);
 		BehavioursManager.init(this);
 		BehavioursManager.registerConditions();
 		
-		firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 		adapter = new AdapterBehaviours(this, this::editBehaviour);
 		
 		recyclerView = (RecyclerView) findViewById(R.id.recycler_behaviours);

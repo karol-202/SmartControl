@@ -2,6 +2,8 @@
 <manifest package="pl.karol202.smartcontrol"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	
 	<application
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
@@ -16,13 +18,22 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		
 		<activity android:name=".behaviour.ActivityEditBehaviour"
 			android:label="@string/title_activity_edit_behaviour">
 		</activity>
+		
 		<activity android:name=".behaviour.conditions.time.ActivityEditConditionTime"
 			android:label="@string/title_activity_edit_condition">
 		</activity>
 		
 		<receiver android:name=".behaviour.conditions.time.ConditionTime$ConditionTimeReceiver"/>
+		
+		<receiver android:name=".util.BootReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+	
 	</application>
 </manifest>
