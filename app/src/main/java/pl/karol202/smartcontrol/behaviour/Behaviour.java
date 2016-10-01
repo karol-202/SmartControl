@@ -1,6 +1,7 @@
 package pl.karol202.smartcontrol.behaviour;
 
 import android.content.SharedPreferences;
+import pl.karol202.smartcontrol.behaviour.actions.Action;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 
@@ -12,11 +13,13 @@ public class Behaviour
 	private int icon;
 	private boolean enabled;
 	private ArrayList<Condition> conditions;
+	private ArrayList<Action> actions;
 	
 	public Behaviour()
 	{
 		this.name = "";
 		this.conditions = new ArrayList<>();
+		this.actions = new ArrayList<>();
 	}
 	
 	public Behaviour(String name, int icon, boolean enabled)
@@ -25,6 +28,7 @@ public class Behaviour
 		this.icon = icon;
 		this.enabled = enabled;
 		this.conditions = new ArrayList<>();
+		this.actions = new ArrayList<>();
 	}
 	
 	public Behaviour defaultBehaviour()
@@ -33,6 +37,7 @@ public class Behaviour
 		icon = 0;
 		enabled = true;
 		conditions.clear();
+		actions.clear();
 		return this;
 	}
 	
@@ -62,6 +67,23 @@ public class Behaviour
 			behaviour.addCondition(condition);
 		}
 		
+		int actionsLength = prefs.getInt(header + "actionsLength", 0);
+		for(int i = 0; i < actionsLength; i++)
+		{
+			int type = prefs.getInt(header + "action" + i + "type", -1);
+			Action action;
+			switch(type)
+			{
+			case 0:
+				action = null;
+				break;
+			default:
+				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
+			}
+			action.loadAction(prefs, behaviourId, i);
+			behaviour.addAction(action);
+		}
+		
 		return behaviour;
 	}
 	
@@ -78,6 +100,14 @@ public class Behaviour
 			Condition condition = conditions.get(i);
 			editor.putInt(header + "condition" + i + "type", condition.getConditionType().getId());
 			conditions.get(i).saveCondition(editor, behaviourId, i);
+		}
+		
+		editor.putInt(header + "actionsLength", actions.size());
+		for(int i = 0; i < actions.size(); i++)
+		{
+			Action action = actions.get(i);
+			editor.putInt(header + "action" + i + "type", action.getActionType().getId());
+			actions.get(i).saveAction(editor, behaviourId, i);
 		}
 	}
 	
@@ -137,5 +167,25 @@ public class Behaviour
 	public int getConditionsLength()
 	{
 		return conditions.size();
+	}
+	
+	public void addAction(Action action)
+	{
+		this.actions.add(action);
+	}
+	
+	public Action getAction(int position)
+	{
+		return actions.get(position);
+	}
+	
+	public void removeAction(int position)
+	{
+		this.actions.remove(position);
+	}
+	
+	public int getActionsLength()
+	{
+		return actions.size();
 	}
 }

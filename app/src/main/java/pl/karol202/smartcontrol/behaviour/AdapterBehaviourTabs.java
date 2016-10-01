@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.actions.FragmentBehaviourActions;
 import pl.karol202.smartcontrol.behaviour.conditions.FragmentBehaviourConditions;
 import pl.karol202.smartcontrol.behaviour.info.FragmentBehaviourInfo;
 
@@ -28,6 +29,7 @@ public class AdapterBehaviourTabs extends FragmentPagerAdapter
 		
 		addFragment(new FragmentBehaviourInfo(), context.getString(R.string.tab_info));
 		addFragment(new FragmentBehaviourConditions(), context.getString(R.string.tab_conditions));
+		addFragment(new FragmentBehaviourActions(), context.getString(R.string.tab_actions));
 	}
 	
 	@Override

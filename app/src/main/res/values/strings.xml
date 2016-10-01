@@ -14,6 +14,7 @@
 	<string name="message_dialog_condition_delete">Czy na pewno chcesz usunąć ten warunek?</string>
 	<string name="button_positive_dialog_condition_delete">Usuń</string>
 	<string name="button_negative_dialog_condition_delete">Anuluj</string>
+	<string name="title_dialog_action_type">Wybierz skutek</string>
 	
 	<string name="item_behaviour_add">Dodaj zachowanie</string>
 	<string name="item_behaviour_delete">Usuń zachowanie</string>
@@ -22,6 +23,7 @@
 	
 	<string name="tab_info">Info</string>
 	<string name="tab_conditions">Warunki</string>
+	<string name="tab_actions">Skutki</string>
 	
 	<string name="behaviour_name">Nazwa zachowania</string>
 	<string name="behaviour_icon">Ikona</string>

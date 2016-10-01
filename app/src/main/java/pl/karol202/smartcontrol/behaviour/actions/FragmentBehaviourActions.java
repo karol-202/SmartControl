@@ -1,4 +1,4 @@
-package pl.karol202.smartcontrol.behaviour.conditions;
+package pl.karol202.smartcontrol.behaviour.actions;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -7,18 +7,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.util.ItemDecorationDivider;
 
-public class FragmentBehaviourConditions extends Fragment
+public class FragmentBehaviourActions extends Fragment
 {
 	private int behaviourId;
 	private Behaviour behaviour;
-	private AdapterBehaviourConditions adapter;
+	private AdapterBehaviourActions adapter;
 	
 	private RecyclerView recyclerView;
 	private FloatingActionButton fab;
@@ -34,16 +36,16 @@ public class FragmentBehaviourConditions extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.fragment_behaviour_conditions, container, false);
-		adapter = new AdapterBehaviourConditions(getActivity(), behaviour, this::editCondition);
+		View view = inflater.inflate(R.layout.fragment_behaviour_actions, container, false);
+		adapter = new AdapterBehaviourActions(getActivity(), behaviour, this::editAction);
 		
-		recyclerView = (RecyclerView) view.findViewById(R.id.recycler_behaviour_conditions);
+		recyclerView = (RecyclerView) view.findViewById(R.id.recycler_behaviour_actions);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.setAdapter(adapter);
 		recyclerView.addItemDecoration(new ItemDecorationDivider(getActivity()));
 		
-		fab = (FloatingActionButton) view.findViewById(R.id.fab_add_condition);
-		fab.setOnClickListener(v -> newCondition());
+		fab = (FloatingActionButton) view.findViewById(R.id.fab_add_action);
+		fab.setOnClickListener(v -> newAction());
 		return view;
 	}
 	
@@ -54,31 +56,31 @@ public class FragmentBehaviourConditions extends Fragment
 		adapter.notifyDataSetChanged();
 	}
 	
-	private void newCondition()
+	private void newAction()
 	{
-		View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_condition_type, null);
+		View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_action_type, null);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(R.string.title_dialog_condition_type);
+		builder.setTitle(R.string.title_dialog_action_type);
 		builder.setView(view);
 		AlertDialog dialog = builder.create();
 		
-		AdapterConditionTypes adapter = new AdapterConditionTypes(getActivity());
-		ListView list = (ListView) view.findViewById(R.id.list_condition_types);
+		AdapterActionTypes adapter = new AdapterActionTypes(getActivity());
+		ListView list = (ListView) view.findViewById(R.id.list_action_types);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener((parent, view1, position, id) -> {
-			editCondition(-1, (ConditionType) adapter.getItem(position));
+			editAction(-1, (ActionType) adapter.getItem(position));
 			dialog.dismiss();
 		});
 		
 		dialog.show();
 	}
 	
-	private void editCondition(int position)
+	private void editAction(int position)
 	{
-		editCondition(position, behaviour.getCondition(position).getConditionType());
+		editAction(position, behaviour.getAction(position).getActionType());
 	}
 	
-	private void editCondition(int position, ConditionType type)
+	private void editAction(int position, ActionType type)
 	{
 		Intent intent = new Intent(getActivity(), type.getEditActivity());
 		intent.putExtra("behaviourId", behaviourId);
