@@ -16,6 +16,8 @@ public interface Condition
 	
 	Class<? extends ActivityEditCondition> getEditActivity();
 	
+	boolean isActive();
+	
 	void registerCondition();
 	
 	void unregisterCondition();

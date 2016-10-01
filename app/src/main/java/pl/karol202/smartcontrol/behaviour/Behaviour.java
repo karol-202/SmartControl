@@ -59,7 +59,7 @@ public class Behaviour
 			switch(type)
 			{
 			case Condition.CONDITION_TIME:
-				condition = new ConditionTime(behaviour);
+				condition = new ConditionTime(behaviourId, i, behaviour);
 				break;
 			default:
 				throw new RuntimeException("Error during loading behaviour: invalid condition type " + type + ".");

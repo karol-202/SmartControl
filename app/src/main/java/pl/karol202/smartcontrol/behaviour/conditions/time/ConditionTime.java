@@ -1,16 +1,16 @@
 package pl.karol202.smartcontrol.behaviour.conditions.time;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import pl.karol202.smartcontrol.R;
+import android.util.Log;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
+import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.behaviour.conditions.ActivityEditCondition;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.ConditionType;
@@ -25,43 +25,42 @@ public class ConditionTime implements Condition
 		@Override
 		public void onReceive(Context context, Intent intent)
 		{
-			if(notificationManager == null) notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-			//Toast.makeText(context, "To działa!", Toast.LENGTH_LONG).show();
-			int event = intent.getIntExtra("event", -1);
-			System.out.println("onReceive " + event);
-			if(event == -1) throw new RuntimeException("Event parameter not passed to receiver.");
-			boolean start = event == EVENT_START;
-			Notification.Builder builder = new Notification.Builder(context);
-			builder.setSmallIcon(R.mipmap.ic_launcher);
-			builder.setContentTitle("SmartControl");
-			builder.setContentText(start ? "Poczatek" : "Koniec");
-			notificationManager.notify(start ? 0 : 1, builder.build());
+			int behaviourId = intent.getIntExtra("behaviourId", -1);
+			int conditionId = intent.getIntExtra("conditionId", -1);
+			if(conditionId == -1) throw new RuntimeException("conditionId parameter not passed to receiver.");
+			Log.d("SC", "ConditionTimeReceiver: " + conditionId);
+			ConditionTime ct = (ConditionTime) BehavioursManager.getBehaviour(behaviourId).getCondition(conditionId);
+			ct.update();
 		}
 	}
 	
-	static final int EVENT_START = 0;
-	static final int EVENT_END = 1;
+	private static final int EVENT_START = 0;
+	private static final int EVENT_END = 1;
 	
 	private static Context context;
-	private static NotificationManager notificationManager;
 	private static AlarmManager alarmManager;
 	
 	private Time startTime;
 	private Time endTime;
 	private boolean precise;
 	
+	private int behaviourId;
+	private int conditionId;
+	private Behaviour behaviour;
 	private PendingIntent piStart;
 	private PendingIntent piEnd;
-	private Behaviour behaviour;
+	private boolean active;
 	
-	public ConditionTime(Behaviour behaviour)
+	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour)
 	{
+		this.behaviourId = behaviourId;
+		this.conditionId = conditionId;
 		this.behaviour = behaviour;
 	}
 	
-	public ConditionTime(Behaviour behaviour, Time startTime, Time endTime, boolean precise)
+	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour, Time startTime, Time endTime, boolean precise)
 	{
-		this(behaviour);
+		this(behaviourId, conditionId, behaviour);
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.precise = precise;
@@ -70,7 +69,6 @@ public class ConditionTime implements Condition
 	public static void init(Context context)
 	{
 		ConditionTime.context = context;
-		ConditionTime.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		ConditionTime.alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	}
 	
@@ -105,41 +103,38 @@ public class ConditionTime implements Condition
 	}
 	
 	@Override
+	public boolean isActive()
+	{
+		return active;
+	}
+	
+	@Override
 	public void registerCondition()
 	{
 		Bundle bundle = new Bundle();
+		bundle.putInt("behaviourId", behaviourId);
+		bundle.putInt("conditionId", conditionId);
 		
 		Intent intentStart = new Intent(context, ConditionTimeReceiver.class);
-		bundle.putInt("event", EVENT_START);
 		intentStart.putExtras(bundle);
 		piStart = PendingIntent.getBroadcast(context, EVENT_START, intentStart, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		Intent intentEnd = new Intent(context, ConditionTimeReceiver.class);
-		bundle.putInt("event", EVENT_END);
 		intentEnd.putExtras(bundle);
 		piEnd = PendingIntent.getBroadcast(context, EVENT_END, intentEnd, PendingIntent.FLAG_CANCEL_CURRENT);
 		
-		Calendar calStart = Calendar.getInstance();
-		calStart.set(Calendar.HOUR_OF_DAY, startTime.getHour());
-		calStart.set(Calendar.MINUTE, startTime.getMinute());
-		calStart.set(Calendar.SECOND, 0);
-		if(calStart.before(Calendar.getInstance())) calStart.roll(Calendar.DATE, true);
+		Calendar calStart = timeToCalendar(startTime);
+		Calendar calEnd = timeToCalendar(endTime);
 		
-		Calendar calEnd = Calendar.getInstance();
-		calEnd.set(Calendar.HOUR_OF_DAY, endTime.getHour());
-		calEnd.set(Calendar.MINUTE, endTime.getMinute());
-		calEnd.set(Calendar.SECOND, 0);
-		if(calEnd.before(Calendar.getInstance())) calEnd.roll(Calendar.DATE, true);
-		
-		if(precise)
+		if(precise && Build.VERSION.SDK_INT >= 19)
 		{
-			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piStart);
-			alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piEnd);
+			alarmManager.setExact(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), piStart);
+			alarmManager.setExact(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), piEnd);
 		}
 		else
 		{
-			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piStart);
-			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), AlarmManager.INTERVAL_DAY, piEnd);
+			alarmManager.set(AlarmManager.RTC_WAKEUP, calStart.getTimeInMillis(), piStart);
+			alarmManager.set(AlarmManager.RTC_WAKEUP, calEnd.getTimeInMillis(), piEnd);
 		}
 	}
 	
@@ -154,6 +149,24 @@ public class ConditionTime implements Condition
 	{
 		unregisterCondition();
 		if(behaviour.isEnabled()) registerCondition();
+		
+		
+	}
+	
+	private Calendar timeToCalendar(Time time)
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
+		calendar.set(Calendar.MINUTE, time.getMinute());
+		calendar.set(Calendar.SECOND, 0);
+		if(calendar.before(Calendar.getInstance())) getNextDate(calendar);
+		return calendar;
+	}
+	
+	private Calendar getNextDate(Calendar calendar)
+	{
+		calendar.roll(Calendar.DATE, true);
+		return calendar;
 	}
 	
 	@Override
@@ -214,5 +227,6 @@ public class ConditionTime implements Condition
 	public void setPrecise(boolean precise)
 	{
 		this.precise = precise;
-		update();	}
+		update();
+	}
 }

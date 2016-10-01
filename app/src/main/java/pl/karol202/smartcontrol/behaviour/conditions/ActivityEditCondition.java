@@ -27,7 +27,7 @@ public abstract class ActivityEditCondition extends ActivityWithToolbar
 		if(conditionId == -1)
 		{
 			conditionId = behaviour.getConditionsLength();
-			behaviour.addCondition(createCondition(behaviour));
+			behaviour.addCondition(createCondition(behaviourId, conditionId, behaviour));
 			BehavioursManager.saveBehaviours();
 		}
 		condition = behaviour.getCondition(conditionId);
@@ -67,5 +67,5 @@ public abstract class ActivityEditCondition extends ActivityWithToolbar
 		builder.show();
 	}
 	
-	protected abstract Condition createCondition(Behaviour behaviour);
+	protected abstract Condition createCondition(int behaviourId, int conditionId, Behaviour behaviour);
 }
