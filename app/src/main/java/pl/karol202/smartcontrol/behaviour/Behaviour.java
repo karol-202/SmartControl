@@ -4,11 +4,12 @@ import android.content.SharedPreferences;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
+import pl.karol202.smartcontrol.behaviour.conditions.OnConditionChangedListener;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 
 import java.util.ArrayList;
 
-public class Behaviour
+public class Behaviour implements OnConditionChangedListener
 {
 	private String name;
 	private int icon;
@@ -116,6 +117,12 @@ public class Behaviour
 	{
 		if(!enabled) return;
 		for(Condition condition : conditions) condition.registerCondition();
+	}
+	
+	@Override
+	public void onConditionChanged()
+	{
+		
 	}
 	
 	public String getName()
