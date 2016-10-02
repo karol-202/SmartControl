@@ -2,6 +2,7 @@
 	<string name="app_name">Smart Control</string>
 	<string name="title_activity_edit_behaviour">Edytuj zachowanie</string>
 	<string name="title_activity_edit_condition">Edytuj warunek</string>
+	<string name="title_activity_edit_action">Edytuj skutek</string>
 	
 	<string name="title_dialog_behaviour_name">Zmień nazwę zachowania</string>
 	<string name="button_positive_dialog_behaviour_name">Zmień nazwę</string>
@@ -15,11 +16,18 @@
 	<string name="button_positive_dialog_condition_delete">Usuń</string>
 	<string name="button_negative_dialog_condition_delete">Anuluj</string>
 	<string name="title_dialog_action_type">Wybierz skutek</string>
+	<string name="message_dialog_action_delete">Czy na pewno chcesz usunąć ten skutek?</string>
+	<string name="button_positive_dialog_action_delete">Usuń</string>
+	<string name="button_negative_dialog_action_delete">Anuluj</string>
+	<string name="title_dialog_action_notification_text">Zmień treść powiadomienia</string>
+	<string name="button_positive_dialog_action_notification_text">Zmień</string>
+	<string name="button_negative_dialog_action_notification_text">Anuluj</string>
 	
 	<string name="item_behaviour_add">Dodaj zachowanie</string>
 	<string name="item_behaviour_delete">Usuń zachowanie</string>
 	<string name="item_condition_add">Dodaj warunek</string>
 	<string name="item_condition_delete">Usuń warunek</string>
+	<string name="item_action_delete">Usuń skutek</string>
 	
 	<string name="tab_info">Info</string>
 	<string name="tab_conditions">Warunki</string>
@@ -28,11 +36,19 @@
 	<string name="behaviour_name">Nazwa zachowania</string>
 	<string name="behaviour_icon">Ikona</string>
 	<string name="behaviour_enabled">Zachowanie włączone</string>
+	
 	<string name="condition_type">Warunek</string>
+	
 	<string name="condition_time_start">Czas rozpoczęcia</string>
 	<string name="condition_time_end">Czas zakończenia</string>
 	<string name="condition_time_precise">Wysoka dokładność</string>
 	<string name="condition_time_precise_info">Może nieznacznie zwiększyć zużycie baterii</string>
 	
+	<string name="action_type">Skutek</string>
+	
+	<string name="action_notification_text">Treść powiadomienia</string>
+	
 	<string name="condition_time_name">Przedział czasowy</string>
+	
+	<string name="action_notification_name">Powiadomienie</string>
 </resources>

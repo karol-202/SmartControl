@@ -5,7 +5,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical"
-	tools:context=".behaviour.conditions.time.ActivityEditConditionTime">
+	tools:context=".behaviour.actions.notification.ActivityEditActionNotification">
 	
 	<include
 		android:id="@+id/toolbar"
@@ -14,7 +14,7 @@
 	<android.support.v7.widget.RecyclerView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:id="@+id/recycler_condition_time"
+		android:id="@+id/recycler_action_notification"
 		android:scrollbars="vertical" />
-	
+
 </LinearLayout>

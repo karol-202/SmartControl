@@ -24,6 +24,7 @@ public class AdapterBehaviourActions extends Adapter<AdapterBehaviourActions.Vie
 		public ViewHolderActions(View view)
 		{
 			super(view);
+			view.setOnClickListener(v -> listener.onItemClick(position));
 			imageIcon = (ImageView) view.findViewById(R.id.image_action_icon);
 			textName = (TextView) view.findViewById(R.id.text_action_name);
 			textInfo = (TextView) view.findViewById(R.id.text_action_info);

@@ -20,20 +20,20 @@
 		</activity>
 		
 		<activity android:name=".behaviour.ActivityEditBehaviour"
-			android:label="@string/title_activity_edit_behaviour">
-		</activity>
+			android:label="@string/title_activity_edit_behaviour"/>
 		
 		<activity android:name=".behaviour.conditions.time.ActivityEditConditionTime"
-			android:label="@string/title_activity_edit_condition">
-		</activity>
+			android:label="@string/title_activity_edit_condition"/>
+		
+		<activity android:name=".behaviour.actions.notification.ActivityEditActionNotification"
+			android:label="@string/title_activity_edit_action"/>
+		
 		
 		<receiver android:name=".behaviour.conditions.time.ConditionTime$ConditionTimeReceiver"/>
-		
 		<receiver android:name=".util.BootReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
-	
 	</application>
 </manifest>

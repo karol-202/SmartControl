@@ -1,8 +1,11 @@
 package pl.karol202.smartcontrol.behaviour.actions;
 
+import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.actions.notification.ActivityEditActionNotification;
+
 public enum ActionType
 {
-	;
+	NOTIFICATION(Action.ACTION_NOTIFICATION, R.string.action_notification_name, R.drawable.ic_action_notification_black_48dp, ActivityEditActionNotification.class);
 	
 	private int id;
 	private int name;

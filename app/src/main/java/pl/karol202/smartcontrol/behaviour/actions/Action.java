@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 public interface Action
 {
+	int ACTION_NOTIFICATION = 0;
+	
 	ActionType getActionType();
 	
 	int getName();
@@ -13,6 +15,8 @@ public interface Action
 	String getInfo();
 	
 	Class<? extends ActivityEditAction> getEditActivity();
+	
+	void execute();
 	
 	void loadAction(SharedPreferences prefs, int behaviourId, int actionId);
 	

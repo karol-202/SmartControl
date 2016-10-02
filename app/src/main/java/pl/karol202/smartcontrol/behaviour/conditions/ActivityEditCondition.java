@@ -22,6 +22,7 @@ public abstract class ActivityEditCondition extends ActivityWithToolbar
 		super.onCreate(savedInstanceState);
 		behaviourId = getIntent().getIntExtra("behaviourId", -1);
 		conditionId = getIntent().getIntExtra("conditionId", -1);
+		if(behaviourId == -1) throw new RuntimeException("behaviourId not passed to ActivityEditCondition");
 		Behaviour behaviour = BehavioursManager.getBehaviour(behaviourId);
 		if(conditionId == -1)
 		{

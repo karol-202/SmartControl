@@ -2,6 +2,7 @@ package pl.karol202.smartcontrol.behaviour;
 
 import android.content.SharedPreferences;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
+import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 
@@ -74,8 +75,8 @@ public class Behaviour
 			Action action;
 			switch(type)
 			{
-			case 0:
-				action = null;
+			case Action.ACTION_NOTIFICATION:
+				action = new ActionNotification();
 				break;
 			default:
 				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");

@@ -11,14 +11,10 @@ import java.util.ArrayList;
 
 public class AdapterConditionTime extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnTimeSelectedListener, OnConditionChangedListener
 {
-	private Context context;
-	private ConditionTime conditionTime;
 	private ArrayList<ConditionTimeProperty<? extends RecyclerView.ViewHolder>> properties;
 	
 	public AdapterConditionTime(Context context, ConditionTime conditionTime, FragmentManager manager)
 	{
-		this.context = context;
-		this.conditionTime = conditionTime;
 		this.properties = new ArrayList<>();
 		this.properties.add(new ConditionTimeType(conditionTime, context));
 		this.properties.add(new ConditionTimeTime(conditionTime, context, ConditionTimeTime.WhichTime.START, manager, this));

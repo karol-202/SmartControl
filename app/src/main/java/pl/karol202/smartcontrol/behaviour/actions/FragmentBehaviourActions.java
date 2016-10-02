@@ -84,7 +84,7 @@ public class FragmentBehaviourActions extends Fragment
 	{
 		Intent intent = new Intent(getActivity(), type.getEditActivity());
 		intent.putExtra("behaviourId", behaviourId);
-		intent.putExtra("conditionId", position);
+		intent.putExtra("actionId", position);
 		startActivity(intent);
 	}
 }
