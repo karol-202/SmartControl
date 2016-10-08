@@ -4,6 +4,17 @@ import android.content.SharedPreferences;
 
 public interface Action
 {
+	enum WhichAction
+	{
+		START, END;
+		
+		public static WhichAction getById(int id)
+		{
+			if(id == -1 || id >= values().length) throw new RuntimeException("No such action: " + id);
+			return values()[id];
+		}
+	}
+	
 	int ACTION_NOTIFICATION = 0;
 	
 	ActionType getActionType();
@@ -18,7 +29,7 @@ public interface Action
 	
 	void execute();
 	
-	void loadAction(SharedPreferences prefs, int behaviourId, int actionId);
+	void loadAction(SharedPreferences prefs, String header);
 	
-	void saveAction(SharedPreferences.Editor editor, int behaviourId, int actionId);
+	void saveAction(SharedPreferences.Editor editor, String header);
 }

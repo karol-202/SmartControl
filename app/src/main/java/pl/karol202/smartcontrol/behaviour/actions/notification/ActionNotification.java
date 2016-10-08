@@ -77,18 +77,14 @@ public class ActionNotification implements Action
 	}
 	
 	@Override
-	public void loadAction(SharedPreferences prefs, int behaviourId, int actionId)
+	public void loadAction(SharedPreferences prefs, String header)
 	{
-		String header = "behaviour" + behaviourId + "action" + actionId;
-		
 		text = prefs.getString(header + "text", "");
 	}
 	
 	@Override
-	public void saveAction(SharedPreferences.Editor editor, int behaviourId, int actionId)
+	public void saveAction(SharedPreferences.Editor editor, String header)
 	{
-		String header = "behaviour" + behaviourId + "action" + actionId;
-		
 		editor.putString(header + "text", text);
 	}
 	

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.actions.Action.WhichAction;
 import pl.karol202.smartcontrol.behaviour.actions.FragmentBehaviourActions;
 import pl.karol202.smartcontrol.behaviour.conditions.FragmentBehaviourConditions;
 import pl.karol202.smartcontrol.behaviour.info.FragmentBehaviourInfo;
@@ -27,9 +28,12 @@ public class AdapterBehaviourTabs extends FragmentPagerAdapter
 		arguments = new Bundle();
 		arguments.putInt("behaviourId", behaviourId);
 		
-		addFragment(new FragmentBehaviourInfo(), context.getString(R.string.tab_info));
-		addFragment(new FragmentBehaviourConditions(), context.getString(R.string.tab_conditions));
-		addFragment(new FragmentBehaviourActions(), context.getString(R.string.tab_actions));
+		addFragment(new FragmentBehaviourInfo(), context.getString(R.string.tab_info), arguments);
+		addFragment(new FragmentBehaviourConditions(), context.getString(R.string.tab_conditions), arguments);
+		arguments.putInt("whichAction", WhichAction.START.ordinal());
+		addFragment(new FragmentBehaviourActions(), context.getString(R.string.tab_actions_start), new Bundle(arguments));
+		arguments.putInt("whichAction", WhichAction.END.ordinal());
+		addFragment(new FragmentBehaviourActions(), context.getString(R.string.tab_actions_end), new Bundle(arguments));
 	}
 	
 	@Override
@@ -50,9 +54,9 @@ public class AdapterBehaviourTabs extends FragmentPagerAdapter
 		return titles.get(position);
 	}
 	
-	private void addFragment(Fragment fragment, String title)
+	private void addFragment(Fragment fragment, String title, Bundle bundle)
 	{
-		fragment.setArguments(arguments);
+		fragment.setArguments(bundle);
 		fragments.add(fragment);
 		titles.add(title);
 	}

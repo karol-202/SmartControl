@@ -9,10 +9,12 @@ import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.activity.ActivityWithToolbar;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.behaviour.actions.Action.WhichAction;
 
 public abstract class ActivityEditAction extends ActivityWithToolbar
 {
 	protected int behaviourId;
+	protected WhichAction whichAction;
 	protected int actionId;
 	protected Action action;
 	
@@ -21,16 +23,32 @@ public abstract class ActivityEditAction extends ActivityWithToolbar
 	{
 		super.onCreate(savedInstanceState);
 		behaviourId = getIntent().getIntExtra("behaviourId", -1);
-		actionId = getIntent().getIntExtra("actionId", -1);
 		if(behaviourId == -1) throw new RuntimeException("behaviourId not passed to ActivityEditAction");
 		Behaviour behaviour = BehavioursManager.getBehaviour(behaviourId);
-		if(actionId == -1)
+		
+		whichAction = WhichAction.getById(getIntent().getIntExtra("whichAction", -1));
+		
+		actionId = getIntent().getIntExtra("actionId", -1);
+		if(whichAction == WhichAction.START)
 		{
-			actionId = behaviour.getActionsLength();
-			behaviour.addAction(createAction());
-			BehavioursManager.saveBehaviours();
+			if(actionId == -1)
+			{
+				actionId = behaviour.getActionsStartLength();
+				behaviour.addActionStart(createAction());
+				BehavioursManager.saveBehaviours();
+			}
+			action = behaviour.getActionStart(actionId);
 		}
-		action = behaviour.getAction(actionId);
+		else
+		{
+			if(actionId == -1)
+			{
+				actionId = behaviour.getActionsEndLength();
+				behaviour.addActionEnd(createAction());
+				BehavioursManager.saveBehaviours();
+			}
+			action = behaviour.getActionEnd(actionId);
+		}
 	}
 	
 	@Override
@@ -59,7 +77,8 @@ public abstract class ActivityEditAction extends ActivityWithToolbar
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.message_dialog_action_delete);
 		builder.setPositiveButton(R.string.button_positive_dialog_action_delete, (dialog, which) -> {
-			BehavioursManager.getBehaviour(behaviourId).removeAction(actionId);
+			if(whichAction == WhichAction.START) BehavioursManager.getBehaviour(behaviourId).removeActionStart(actionId);
+			else BehavioursManager.getBehaviour(behaviourId).removeActionEnd(actionId);
 			BehavioursManager.saveBehaviours();
 			ActivityEditAction.this.finish();
 		});

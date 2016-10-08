@@ -15,13 +15,16 @@ public class Behaviour implements OnConditionChangedListener
 	private int icon;
 	private boolean enabled;
 	private ArrayList<Condition> conditions;
-	private ArrayList<Action> actions;
+	private ArrayList<Action> actionsStart;
+	private ArrayList<Action> actionsEnd;
+	private boolean active;
 	
 	public Behaviour()
 	{
 		this.name = "";
 		this.conditions = new ArrayList<>();
-		this.actions = new ArrayList<>();
+		this.actionsStart = new ArrayList<>();
+		this.actionsEnd = new ArrayList<>();
 	}
 	
 	public Behaviour(String name, int icon, boolean enabled)
@@ -30,7 +33,8 @@ public class Behaviour implements OnConditionChangedListener
 		this.icon = icon;
 		this.enabled = enabled;
 		this.conditions = new ArrayList<>();
-		this.actions = new ArrayList<>();
+		this.actionsStart = new ArrayList<>();
+		this.actionsEnd = new ArrayList<>();
 	}
 	
 	public Behaviour defaultBehaviour()
@@ -39,7 +43,8 @@ public class Behaviour implements OnConditionChangedListener
 		icon = 0;
 		enabled = true;
 		conditions.clear();
-		actions.clear();
+		actionsStart.clear();
+		actionsEnd.clear();
 		return this;
 	}
 	
@@ -69,10 +74,11 @@ public class Behaviour implements OnConditionChangedListener
 			behaviour.addCondition(condition);
 		}
 		
-		int actionsLength = prefs.getInt(header + "actionsLength", 0);
-		for(int i = 0; i < actionsLength; i++)
+		int actionsStartLength = prefs.getInt(header + "actionsStartLength", 0);
+		for(int i = 0; i < actionsStartLength; i++)
 		{
-			int type = prefs.getInt(header + "action" + i + "type", -1);
+			String actionHeader = header + "actionStart" + i;
+			int type = prefs.getInt(actionHeader + "type", -1);
 			Action action;
 			switch(type)
 			{
@@ -82,8 +88,26 @@ public class Behaviour implements OnConditionChangedListener
 			default:
 				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
 			}
-			action.loadAction(prefs, behaviourId, i);
-			behaviour.addAction(action);
+			action.loadAction(prefs, actionHeader);
+			behaviour.addActionStart(action);
+		}
+		
+		int actionsEndLength = prefs.getInt(header + "actionsEndLength", 0);
+		for(int i = 0; i < actionsEndLength; i++)
+		{
+			String actionHeader = header + "actionEnd" + i;
+			int type = prefs.getInt(actionHeader + "type", -1);
+			Action action;
+			switch(type)
+			{
+			case Action.ACTION_NOTIFICATION:
+				action = new ActionNotification();
+				break;
+			default:
+				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
+			}
+			action.loadAction(prefs, actionHeader);
+			behaviour.addActionEnd(action);
 		}
 		
 		return behaviour;
@@ -104,12 +128,22 @@ public class Behaviour implements OnConditionChangedListener
 			conditions.get(i).saveCondition(editor, behaviourId, i);
 		}
 		
-		editor.putInt(header + "actionsLength", actions.size());
-		for(int i = 0; i < actions.size(); i++)
+		editor.putInt(header + "actionsStartLength", actionsStart.size());
+		for(int i = 0; i < actionsStart.size(); i++)
 		{
-			Action action = actions.get(i);
-			editor.putInt(header + "action" + i + "type", action.getActionType().getId());
-			actions.get(i).saveAction(editor, behaviourId, i);
+			String actionHeader = header + "actionStart" + i;
+			Action action = actionsStart.get(i);
+			editor.putInt(actionHeader + "type", action.getActionType().getId());
+			actionsStart.get(i).saveAction(editor, actionHeader);
+		}
+		
+		editor.putInt(header + "actionsEndLength", actionsEnd.size());
+		for(int i = 0; i < actionsEnd.size(); i++)
+		{
+			String actionHeader = header + "actionEnd" + i;
+			Action action = actionsEnd.get(i);
+			editor.putInt(actionHeader + "type", action.getActionType().getId());
+			actionsEnd.get(i).saveAction(editor, actionHeader);
 		}
 	}
 	
@@ -122,7 +156,28 @@ public class Behaviour implements OnConditionChangedListener
 	@Override
 	public void onConditionChanged()
 	{
-		
+		boolean active = true;
+		for(Condition condition : conditions)
+		{
+			if(!condition.isActive())
+			{
+				active = false;
+				break;
+			}
+		}
+		if(active && !this.active) onConditionsTrue();
+		else if(!active && this.active) onConditionsFalse();
+		this.active = active;
+	}
+	
+	private void onConditionsTrue()
+	{
+		for(Action action : actionsStart) action.execute();
+	}
+	
+	private void onConditionsFalse()
+	{
+		for(Action action : actionsEnd) action.execute();
 	}
 	
 	public String getName()
@@ -177,23 +232,43 @@ public class Behaviour implements OnConditionChangedListener
 		return conditions.size();
 	}
 	
-	public void addAction(Action action)
+	public void addActionStart(Action action)
 	{
-		this.actions.add(action);
+		this.actionsStart.add(action);
 	}
 	
-	public Action getAction(int position)
+	public Action getActionStart(int position)
 	{
-		return actions.get(position);
+		return actionsStart.get(position);
 	}
 	
-	public void removeAction(int position)
+	public void removeActionStart(int position)
 	{
-		this.actions.remove(position);
+		this.actionsStart.remove(position);
 	}
 	
-	public int getActionsLength()
+	public int getActionsStartLength()
 	{
-		return actions.size();
+		return actionsStart.size();
+	}
+	
+	public void addActionEnd(Action action)
+	{
+		this.actionsEnd.add(action);
+	}
+	
+	public Action getActionEnd(int position)
+	{
+		return actionsEnd.get(position);
+	}
+	
+	public void removeActionEnd(int position)
+	{
+		this.actionsEnd.remove(position);
+	}
+	
+	public int getActionsEndLength()
+	{
+		return actionsEnd.size();
 	}
 }

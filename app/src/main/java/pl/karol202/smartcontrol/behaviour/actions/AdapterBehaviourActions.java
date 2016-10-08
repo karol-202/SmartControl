@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
+import pl.karol202.smartcontrol.behaviour.actions.Action.WhichAction;
 import pl.karol202.smartcontrol.util.OnItemClickListener;
 
 public class AdapterBehaviourActions extends Adapter<AdapterBehaviourActions.ViewHolderActions>
@@ -41,12 +42,14 @@ public class AdapterBehaviourActions extends Adapter<AdapterBehaviourActions.Vie
 	
 	private Context context;
 	private Behaviour behaviour;
+	private WhichAction whichAction;
 	private OnItemClickListener listener;
 	
-	public AdapterBehaviourActions(Context context, Behaviour behaviour, OnItemClickListener listener)
+	public AdapterBehaviourActions(Context context, Behaviour behaviour, WhichAction which, OnItemClickListener listener)
 	{
 		this.context = context;
 		this.behaviour = behaviour;
+		this.whichAction = which;
 		this.listener = listener;
 	}
 	
@@ -61,12 +64,13 @@ public class AdapterBehaviourActions extends Adapter<AdapterBehaviourActions.Vie
 	@Override
 	public void onBindViewHolder(ViewHolderActions holder, int position)
 	{
-		holder.bind(position, behaviour.getAction(position));
+		Action ac = whichAction == WhichAction.START ? behaviour.getActionStart(position) : behaviour.getActionEnd(position);
+		holder.bind(position, ac);
 	}
 	
 	@Override
 	public int getItemCount()
 	{
-		return behaviour.getActionsLength();
+		return whichAction == WhichAction.START ? behaviour.getActionsStartLength() : behaviour.getActionsEndLength();
 	}
 }

@@ -36,6 +36,6 @@ public class ActivityEditActionNotification extends ActivityEditAction
 	@Override
 	protected Action createAction()
 	{
-		return new ActionNotification();
+		return new ActionNotification(getString(R.string.action_notification_text_example));
 	}
 }

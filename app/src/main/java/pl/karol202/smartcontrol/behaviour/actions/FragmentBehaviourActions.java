@@ -14,12 +14,14 @@ import android.widget.ListView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.behaviour.actions.Action.WhichAction;
 import pl.karol202.smartcontrol.util.ItemDecorationDivider;
 
 public class FragmentBehaviourActions extends Fragment
 {
 	private int behaviourId;
 	private Behaviour behaviour;
+	private WhichAction whichAction;
 	private AdapterBehaviourActions adapter;
 	
 	private RecyclerView recyclerView;
@@ -30,14 +32,17 @@ public class FragmentBehaviourActions extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		behaviourId = getArguments().getInt("behaviourId");
+		if(behaviourId == -1) throw new RuntimeException("behaviourId parameter not passed to FragmentBehaviourActions");
 		behaviour = BehavioursManager.getBehaviour(behaviourId);
+		
+		whichAction = WhichAction.getById(getArguments().getInt("whichAction", -1));
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_behaviour_actions, container, false);
-		adapter = new AdapterBehaviourActions(getActivity(), behaviour, this::editAction);
+		adapter = new AdapterBehaviourActions(getActivity(), behaviour, whichAction, this::editAction);
 		
 		recyclerView = (RecyclerView) view.findViewById(R.id.recycler_behaviour_actions);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,7 +82,8 @@ public class FragmentBehaviourActions extends Fragment
 	
 	private void editAction(int position)
 	{
-		editAction(position, behaviour.getAction(position).getActionType());
+		Action ac = whichAction == WhichAction.START ? behaviour.getActionStart(position) : behaviour.getActionEnd(position);
+		editAction(position, ac.getActionType());
 	}
 	
 	private void editAction(int position, ActionType type)
@@ -85,6 +91,7 @@ public class FragmentBehaviourActions extends Fragment
 		Intent intent = new Intent(getActivity(), type.getEditActivity());
 		intent.putExtra("behaviourId", behaviourId);
 		intent.putExtra("actionId", position);
+		intent.putExtra("whichAction", whichAction.ordinal());
 		startActivity(intent);
 	}
 }
