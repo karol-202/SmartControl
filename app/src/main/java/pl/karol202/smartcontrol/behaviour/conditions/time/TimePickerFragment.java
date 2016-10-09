@@ -1,4 +1,4 @@
-package pl.karol202.smartcontrol.util;
+package pl.karol202.smartcontrol.behaviour.conditions.time;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

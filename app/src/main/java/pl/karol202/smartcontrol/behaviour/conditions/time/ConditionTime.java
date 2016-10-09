@@ -15,7 +15,6 @@ import pl.karol202.smartcontrol.behaviour.conditions.ActivityEditCondition;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.ConditionType;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTimeTime.WhichTime;
-import pl.karol202.smartcontrol.util.Time;
 
 import java.util.Calendar;
 
@@ -29,12 +28,13 @@ public class ConditionTime implements Condition
 			int behaviourId = intent.getIntExtra("behaviourId", -1);
 			int conditionId = intent.getIntExtra("conditionId", -1);
 			int event = intent.getIntExtra("whichTime", -1);
+			if(behaviourId == -1) throw new RuntimeException("behaviourId parameter not passed to receiver.");
 			if(conditionId == -1) throw new RuntimeException("conditionId parameter not passed to receiver.");
 			if(event == -1) throw new RuntimeException("event paramter not passed to receiver.");
-			Log.d("SC", "ConditionTimeReceiver: " + conditionId);
 			WhichTime time = event == EVENT_START ? WhichTime.START : WhichTime.END;
 			ConditionTime ct = (ConditionTime) BehavioursManager.getBehaviour(behaviourId).getCondition(conditionId);
-			ct.onEvent(time);
+			ct.update();
+			Log.d("SC", "ConditionTimeReceiver: " + conditionId + ", " + time.name());
 		}
 	}
 	
@@ -60,6 +60,7 @@ public class ConditionTime implements Condition
 		this.behaviourId = behaviourId;
 		this.conditionId = conditionId;
 		this.behaviour = behaviour;
+		//update();
 	}
 	
 	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour, Time startTime, Time endTime, boolean precise)
@@ -132,8 +133,8 @@ public class ConditionTime implements Condition
 		Calendar calStart = timeToCalendar(startTime);
 		Calendar calEnd = timeToCalendar(endTime);
 		if(calEnd.before(calStart)) calEnd.roll(Calendar.DATE, true);
-		if(calStart.before(Calendar.getInstance())) getNextDate(calStart);
-		if(calEnd.before(Calendar.getInstance())) getNextDate(calEnd);
+		if(calStart.before(Calendar.getInstance())) calStart.roll(Calendar.DATE, true);
+		if(calEnd.before(Calendar.getInstance())) calEnd.roll(Calendar.DATE, true);
 		
 		if(precise && Build.VERSION.SDK_INT >= 19)
 		{
@@ -158,14 +159,12 @@ public class ConditionTime implements Condition
 	{
 		unregisterCondition();
 		if(behaviour.isEnabled()) registerCondition();
-	}
-	
-	private void onEvent(WhichTime time)
-	{
-		if(time == WhichTime.START) active = true;
+		
+		Time current = getCurrentTime();
+		if(startTime.isBefore(endTime)) active = current.isAfter(startTime) && current.isBefore(endTime);
+		else if(startTime.isAfter(endTime)) active = current.isBefore(startTime) && current.isAfter(endTime);
 		else active = false;
 		behaviour.onConditionChanged();
-		update();
 	}
 	
 	private Calendar timeToCalendar(Time time)
@@ -177,10 +176,10 @@ public class ConditionTime implements Condition
 		return calendar;
 	}
 	
-	private Calendar getNextDate(Calendar calendar)
+	private Time getCurrentTime()
 	{
-		calendar.roll(Calendar.DATE, true);
-		return calendar;
+		Calendar calendar = Calendar.getInstance();
+		return new Time(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
 	}
 	
 	@Override

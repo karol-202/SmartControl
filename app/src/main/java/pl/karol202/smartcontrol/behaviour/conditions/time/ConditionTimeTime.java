@@ -10,9 +10,7 @@ import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.behaviour.conditions.OnConditionChangedListener;
-import pl.karol202.smartcontrol.util.Time;
-import pl.karol202.smartcontrol.util.TimePickerFragment;
-import pl.karol202.smartcontrol.util.TimePickerFragment.OnTimeSelectedListener;
+import pl.karol202.smartcontrol.behaviour.conditions.time.TimePickerFragment.OnTimeSelectedListener;
 
 public class ConditionTimeTime extends ConditionTimeProperty<ConditionTimeTime.ViewHolderTime> implements OnTimeSelectedListener
 {

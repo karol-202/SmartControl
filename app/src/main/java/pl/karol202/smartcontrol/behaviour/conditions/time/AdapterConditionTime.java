@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import pl.karol202.smartcontrol.behaviour.conditions.OnConditionChangedListener;
-import pl.karol202.smartcontrol.util.TimePickerFragment.OnTimeSelectedListener;
+import pl.karol202.smartcontrol.behaviour.conditions.time.TimePickerFragment.OnTimeSelectedListener;
 
 import java.util.ArrayList;
 
