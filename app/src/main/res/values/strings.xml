@@ -52,6 +52,7 @@
 	<string name="action_notification_text_example">Powiadomienie</string>
 	
 	<string name="action_sound_mode_mode">Tryb dźwięku</string>
+	<string name="action_sound_mode_volume">Głośność</string>
 	
 	<string name="condition_time_name">Przedział czasowy</string>
 	

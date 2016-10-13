@@ -46,12 +46,15 @@ public class ActionSoundMode implements Action
 	private static AudioManager audioManager;
 	
 	private SoundMode soundMode;
+	//Volume of STREAM_RING, 0 is still value greater than vibration level.
+	private int volume;
 	
 	public ActionSoundMode() { }
 	
-	public ActionSoundMode(SoundMode soundMode)
+	public ActionSoundMode(SoundMode soundMode, int volume)
 	{
 		this.soundMode = soundMode;
+		this.volume = volume;
 	}
 	
 	public static void init(Context context)
@@ -94,6 +97,7 @@ public class ActionSoundMode implements Action
 	public void execute()
 	{
 		audioManager.setRingerMode(soundMode.getRingerMode());
+		if(soundMode == SoundMode.NORMAL) audioManager.setStreamVolume(AudioManager.STREAM_RING, volume + 1, 0);
 	}
 	
 	@Override
@@ -108,6 +112,11 @@ public class ActionSoundMode implements Action
 		editor.putInt(header + "soundmode", soundMode.ordinal());
 	}
 	
+	public static AudioManager getAudioManager()
+	{
+		return audioManager;
+	}
+	
 	public SoundMode getSoundMode()
 	{
 		return soundMode;
@@ -116,5 +125,15 @@ public class ActionSoundMode implements Action
 	public void setSoundMode(SoundMode soundMode)
 	{
 		this.soundMode = soundMode;
+	}
+	
+	public int getVolume()
+	{
+		return volume;
+	}
+	
+	public void setVolume(int volume)
+	{
+		this.volume = volume;
 	}
 }

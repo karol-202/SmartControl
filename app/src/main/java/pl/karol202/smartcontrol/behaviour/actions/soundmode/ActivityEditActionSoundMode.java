@@ -1,5 +1,6 @@
 package pl.karol202.smartcontrol.behaviour.actions.soundmode;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class ActivityEditActionSoundMode extends ActivityEditAction
 	@Override
 	protected Action createAction()
 	{
-		return new ActionSoundMode(SoundMode.NORMAL);
+		int volume = ActionSoundMode.getAudioManager().getStreamVolume(AudioManager.STREAM_RING);
+		return new ActionSoundMode(SoundMode.NORMAL, volume - 1);
 	}
 }

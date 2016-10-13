@@ -16,6 +16,7 @@ public class AdapterActionSoundMode extends RecyclerView.Adapter<RecyclerView.Vi
 		this.properties = new ArrayList<>();
 		this.properties.add(new ActionSoundModeType(action, context));
 		this.properties.add(new ActionSoundModeMode(action, context, this));
+		this.properties.add(new ActionSoundModeVolume(action, context));
 	}
 	
 	@Override
