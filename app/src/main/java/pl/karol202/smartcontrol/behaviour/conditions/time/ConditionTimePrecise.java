@@ -14,12 +14,14 @@ public class ConditionTimePrecise extends ConditionTimeProperty<ConditionTimePre
 	class ViewHolderPrecise extends RecyclerView.ViewHolder
 	{
 		private Switch switchPrecise;
+		private boolean binding;
 		
 		public ViewHolderPrecise(View view)
 		{
 			super(view);
 			switchPrecise = (Switch) view.findViewById(R.id.switch_condition_time_precise);
 			switchPrecise.setOnCheckedChangeListener((buttonView, isChecked) -> {
+				if(binding) return;
 				condition.setPrecise(isChecked);
 				BehavioursManager.saveBehaviours();
 			});
@@ -27,7 +29,9 @@ public class ConditionTimePrecise extends ConditionTimeProperty<ConditionTimePre
 		
 		public void bind(ConditionTime condition)
 		{
+			binding = true;
 			switchPrecise.setChecked(condition.isPrecise());
+			binding = false;
 		}
 	}
 	

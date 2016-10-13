@@ -32,6 +32,7 @@ public class ConditionTime implements Condition
 			if(conditionId == -1) throw new RuntimeException("conditionId parameter not passed to receiver.");
 			if(event == -1) throw new RuntimeException("event paramter not passed to receiver.");
 			WhichTime time = event == EVENT_START ? WhichTime.START : WhichTime.END;
+			//if(behaviourId >= BehavioursManager.getBehaviourLength())
 			ConditionTime ct = (ConditionTime) BehavioursManager.getBehaviour(behaviourId).getCondition(conditionId);
 			ct.update();
 			Log.d("SC", "ConditionTimeReceiver: " + conditionId + ", " + time.name());
@@ -53,14 +54,12 @@ public class ConditionTime implements Condition
 	private Behaviour behaviour;
 	private PendingIntent piStart;
 	private PendingIntent piEnd;
-	private boolean active;
 	
 	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour)
 	{
 		this.behaviourId = behaviourId;
 		this.conditionId = conditionId;
 		this.behaviour = behaviour;
-		//update();
 	}
 	
 	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour, Time startTime, Time endTime, boolean precise)
@@ -108,12 +107,6 @@ public class ConditionTime implements Condition
 	}
 	
 	@Override
-	public boolean isActive()
-	{
-		return active;
-	}
-	
-	@Override
 	public void registerCondition()
 	{
 		Bundle bundle = new Bundle();
@@ -123,16 +116,15 @@ public class ConditionTime implements Condition
 		Intent intentStart = new Intent(context, ConditionTimeReceiver.class);
 		bundle.putInt("whichTime", EVENT_START);
 		intentStart.putExtras(bundle);
-		piStart = PendingIntent.getBroadcast(context, EVENT_START, intentStart, PendingIntent.FLAG_CANCEL_CURRENT);
+		piStart = PendingIntent.getBroadcast(context, (conditionId * 2) + EVENT_START, intentStart, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		Intent intentEnd = new Intent(context, ConditionTimeReceiver.class);
 		bundle.putInt("whichTime", EVENT_END);
 		intentEnd.putExtras(bundle);
-		piEnd = PendingIntent.getBroadcast(context, EVENT_END, intentEnd, PendingIntent.FLAG_CANCEL_CURRENT);
+		piEnd = PendingIntent.getBroadcast(context, (conditionId * 2) + EVENT_END, intentEnd, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		Calendar calStart = timeToCalendar(startTime);
 		Calendar calEnd = timeToCalendar(endTime);
-		if(calEnd.before(calStart)) calEnd.roll(Calendar.DATE, true);
 		if(calStart.before(Calendar.getInstance())) calStart.roll(Calendar.DATE, true);
 		if(calEnd.before(Calendar.getInstance())) calEnd.roll(Calendar.DATE, true);
 		
@@ -155,15 +147,19 @@ public class ConditionTime implements Condition
 		if(piEnd != null) alarmManager.cancel(piEnd);
 	}
 	
+	@Override
+	public boolean isActive()
+	{
+		Time current = getCurrentTime();
+		if(startTime.isBefore(endTime)) return (current.isAfter(startTime) || current.equals(startTime)) && current.isBefore(endTime);
+		else if(startTime.isAfter(endTime)) return (current.isAfter(startTime) || current.equals(startTime)) || current.isBefore(endTime);
+		else return false;
+	}
+	
 	private void update()
 	{
 		unregisterCondition();
 		if(behaviour.isEnabled()) registerCondition();
-		
-		Time current = getCurrentTime();
-		if(startTime.isBefore(endTime)) active = current.isAfter(startTime) && current.isBefore(endTime);
-		else if(startTime.isAfter(endTime)) active = current.isBefore(startTime) && current.isAfter(endTime);
-		else active = false;
 		behaviour.onConditionChanged();
 	}
 	

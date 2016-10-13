@@ -20,7 +20,7 @@ public class Time
 		else if(hour > time.getHour()) return false;
 		else
 		{
-			if(minute < time.getHour()) return true;
+			if(minute < time.getMinute()) return true;
 			else return false;
 		}
 	}
@@ -31,7 +31,7 @@ public class Time
 		else if(hour < time.getHour()) return false;
 		else
 		{
-			if(minute > time.getHour()) return true;
+			if(minute > time.getMinute()) return true;
 			else return false;
 		}
 	}

@@ -71,7 +71,7 @@ public class Behaviour implements OnConditionChangedListener
 				throw new RuntimeException("Error during loading behaviour: invalid condition type " + type + ".");
 			}
 			condition.loadCondition(prefs, behaviourId, i);
-			behaviour.addCondition(condition);
+			behaviour.conditions.add(condition);
 		}
 		
 		int actionsStartLength = prefs.getInt(header + "actionsStartLength", 0);
@@ -109,6 +109,8 @@ public class Behaviour implements OnConditionChangedListener
 			action.loadAction(prefs, actionHeader);
 			behaviour.addActionEnd(action);
 		}
+		
+		behaviour.onConditionChanged();
 		
 		return behaviour;
 	}
@@ -156,7 +158,7 @@ public class Behaviour implements OnConditionChangedListener
 	@Override
 	public void onConditionChanged()
 	{
-		boolean active = true;
+		boolean active = false;
 		for(Condition condition : conditions)
 		{
 			if(!condition.isActive())
@@ -164,6 +166,7 @@ public class Behaviour implements OnConditionChangedListener
 				active = false;
 				break;
 			}
+			active = true;
 		}
 		if(active && !this.active) onConditionsTrue();
 		else if(!active && this.active) onConditionsFalse();
@@ -215,6 +218,7 @@ public class Behaviour implements OnConditionChangedListener
 	public void addCondition(Condition condition)
 	{
 		this.conditions.add(condition);
+		onConditionChanged();
 	}
 	
 	public Condition getCondition(int position)
@@ -225,6 +229,7 @@ public class Behaviour implements OnConditionChangedListener
 	public void removeCondition(int conditionId)
 	{
 		this.conditions.remove(conditionId);
+		onConditionChanged();
 	}
 	
 	public int getConditionsLength()
