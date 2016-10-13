@@ -51,6 +51,10 @@ public class BehavioursManager
 	public static void removeBehaviour(int position)
 	{
 		behaviours.remove(position);
+		for(int i = 0; i < behaviours.size(); i++)
+		{
+			behaviours.get(i).setBehaviourId(i);
+		}
 	}
 	
 	public static int getBehaviourLength()

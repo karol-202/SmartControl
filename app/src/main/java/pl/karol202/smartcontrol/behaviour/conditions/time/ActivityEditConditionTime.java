@@ -44,7 +44,7 @@ public class ActivityEditConditionTime extends ActivityEditCondition implements 
 	@Override
 	protected Condition createCondition(int behaviourId, int conditionId, Behaviour behaviour)
 	{
-		return new ConditionTime(behaviourId, conditionId, behaviour, new Time(12, 0), new Time(12, 0), true);
+		return new ConditionTime(behaviour, conditionId, new Time(12, 0), new Time(12, 0), true);
 	}
 	
 	@Override

@@ -67,6 +67,9 @@ public abstract class ActivityEditAction extends ActivityWithToolbar
 		case R.id.item_action_delete:
 			showDeleteDialog();
 			return true;
+		case R.id.item_action_test:
+			action.execute();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

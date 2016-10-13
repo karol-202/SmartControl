@@ -28,6 +28,8 @@
 		<activity android:name=".behaviour.actions.notification.ActivityEditActionNotification"
 			android:label="@string/title_activity_edit_action"/>
 		
+		<activity android:name=".behaviour.actions.soundmode.ActivityEditActionSoundMode"
+			android:label="@string/title_activity_edit_action"/>
 		
 		<receiver android:name=".behaviour.conditions.time.ConditionTime$ConditionTimeReceiver"/>
 		<receiver android:name=".util.BootReceiver">

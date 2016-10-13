@@ -3,6 +3,7 @@ package pl.karol202.smartcontrol.behaviour;
 import android.content.SharedPreferences;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
+import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.OnConditionChangedListener;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
@@ -17,17 +18,20 @@ public class Behaviour implements OnConditionChangedListener
 	private ArrayList<Condition> conditions;
 	private ArrayList<Action> actionsStart;
 	private ArrayList<Action> actionsEnd;
-	private boolean active;
 	
-	public Behaviour()
+	private boolean active;
+	private int behaviourId;
+	
+	public Behaviour(int behaviourId)
 	{
 		this.name = "";
 		this.conditions = new ArrayList<>();
 		this.actionsStart = new ArrayList<>();
 		this.actionsEnd = new ArrayList<>();
+		this.behaviourId = behaviourId;
 	}
 	
-	public Behaviour(String name, int icon, boolean enabled)
+	public Behaviour(int behaviourId, String name, int icon, boolean enabled)
 	{
 		this.name = name;
 		this.icon = icon;
@@ -35,6 +39,7 @@ public class Behaviour implements OnConditionChangedListener
 		this.conditions = new ArrayList<>();
 		this.actionsStart = new ArrayList<>();
 		this.actionsEnd = new ArrayList<>();
+		this.behaviourId = behaviourId;
 	}
 	
 	public Behaviour defaultBehaviour()
@@ -50,7 +55,7 @@ public class Behaviour implements OnConditionChangedListener
 	
 	public static Behaviour loadBehaviour(SharedPreferences prefs, int behaviourId)
 	{
-		Behaviour behaviour = new Behaviour();
+		Behaviour behaviour = new Behaviour(behaviourId);
 		String header = "behaviour" + behaviourId;
 		
 		behaviour.setName(prefs.getString(header + "name", ""));
@@ -65,7 +70,7 @@ public class Behaviour implements OnConditionChangedListener
 			switch(type)
 			{
 			case Condition.CONDITION_TIME:
-				condition = new ConditionTime(behaviourId, i, behaviour);
+				condition = new ConditionTime(behaviour, i);
 				break;
 			default:
 				throw new RuntimeException("Error during loading behaviour: invalid condition type " + type + ".");
@@ -78,41 +83,38 @@ public class Behaviour implements OnConditionChangedListener
 		for(int i = 0; i < actionsStartLength; i++)
 		{
 			String actionHeader = header + "actionStart" + i;
-			int type = prefs.getInt(actionHeader + "type", -1);
-			Action action;
-			switch(type)
-			{
-			case Action.ACTION_NOTIFICATION:
-				action = new ActionNotification();
-				break;
-			default:
-				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
-			}
-			action.loadAction(prefs, actionHeader);
-			behaviour.addActionStart(action);
+			behaviour.addActionStart(loadAction(prefs, actionHeader));
 		}
 		
 		int actionsEndLength = prefs.getInt(header + "actionsEndLength", 0);
 		for(int i = 0; i < actionsEndLength; i++)
 		{
 			String actionHeader = header + "actionEnd" + i;
-			int type = prefs.getInt(actionHeader + "type", -1);
-			Action action;
-			switch(type)
-			{
-			case Action.ACTION_NOTIFICATION:
-				action = new ActionNotification();
-				break;
-			default:
-				throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
-			}
-			action.loadAction(prefs, actionHeader);
-			behaviour.addActionEnd(action);
+			behaviour.addActionEnd(loadAction(prefs, actionHeader));
 		}
 		
 		behaviour.onConditionChanged();
 		
 		return behaviour;
+	}
+	
+	private static Action loadAction(SharedPreferences prefs, String actionHeader)
+	{
+		int type = prefs.getInt(actionHeader + "type", -1);
+		Action action;
+		switch(type)
+		{
+		case Action.ACTION_NOTIFICATION:
+			action = new ActionNotification();
+			break;
+		case Action.ACTION_SOUND_MODE:
+			action = new ActionSoundMode();
+			break;
+		default:
+			throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
+		}
+		action.loadAction(prefs, actionHeader);
+		return action;
 	}
 	
 	public void saveBehaviour(SharedPreferences.Editor editor, int behaviourId)
@@ -229,6 +231,13 @@ public class Behaviour implements OnConditionChangedListener
 	public void removeCondition(int conditionId)
 	{
 		this.conditions.remove(conditionId);
+		for(int i = 0; i < conditions.size(); i++)
+		{
+			Condition condition = conditions.get(i);
+			condition.setConditionId(i);
+			condition.unregisterCondition();
+			if(enabled) condition.registerCondition();
+		}
 		onConditionChanged();
 	}
 	
@@ -275,5 +284,15 @@ public class Behaviour implements OnConditionChangedListener
 	public int getActionsEndLength()
 	{
 		return actionsEnd.size();
+	}
+	
+	public int getBehaviourId()
+	{
+		return behaviourId;
+	}
+	
+	public void setBehaviourId(int behaviourId)
+	{
+		this.behaviourId = behaviourId;
 	}
 }

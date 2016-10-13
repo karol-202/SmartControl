@@ -1,29 +1,49 @@
 package pl.karol202.smartcontrol.behaviour.conditions;
 
 import android.content.SharedPreferences;
+import pl.karol202.smartcontrol.behaviour.Behaviour;
 
-public interface Condition
+public abstract class Condition
 {
-	int CONDITION_TIME = 0;
+	public static final int CONDITION_TIME = 0;
 	
-	ConditionType getConditionType();
+	protected Behaviour behaviour;
+	protected int conditionId;
 	
-	int getName();
+	public Condition(Behaviour behaviour, int conditionId)
+	{
+		this.behaviour = behaviour;
+		this.conditionId = conditionId;
+	}
 	
-	int getIcon();
+	public abstract ConditionType getConditionType();
 	
-	String getInfo();
+	public abstract int getName();
 	
-	Class<? extends ActivityEditCondition> getEditActivity();
+	public abstract int getIcon();
 	
-	boolean isActive();
+	public abstract String getInfo();
 	
-	void registerCondition();
+	public abstract Class<? extends ActivityEditCondition> getEditActivity();
 	
-	void unregisterCondition();
+	public abstract boolean isActive();
 	
-	void loadCondition(SharedPreferences prefs, int behaviourId, int conditionId);
+	public abstract void registerCondition();
 	
-	//Save condition including the condition#Type
-	void saveCondition(SharedPreferences.Editor editor, int behaviourId, int conditionId);
+	public abstract void unregisterCondition();
+	
+	public abstract void loadCondition(SharedPreferences prefs, int behaviourId, int conditionId);
+	
+	//Save condition including the condition#type
+	public abstract void saveCondition(SharedPreferences.Editor editor, int behaviourId, int conditionId);
+	
+	public int getConditionId()
+	{
+		return conditionId;
+	}
+	
+	public void setConditionId(int conditionId)
+	{
+		this.conditionId = conditionId;
+	}
 }

@@ -2,10 +2,12 @@ package pl.karol202.smartcontrol.behaviour.actions;
 
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActivityEditActionNotification;
+import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActivityEditActionSoundMode;
 
 public enum ActionType
 {
-	NOTIFICATION(Action.ACTION_NOTIFICATION, R.string.action_notification_name, R.drawable.ic_action_notification_black_48dp, ActivityEditActionNotification.class);
+	NOTIFICATION(Action.ACTION_NOTIFICATION, R.string.action_notification_name, R.drawable.ic_action_notification_black_48dp, ActivityEditActionNotification.class),
+	SOUND_MODE(Action.ACTION_SOUND_MODE, R.string.action_sound_mode_name, R.drawable.ic_action_sound_mode_black_48dp, ActivityEditActionSoundMode.class);
 	
 	private int id;
 	private int name;

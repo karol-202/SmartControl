@@ -28,7 +28,7 @@ public class ActivityEditBehaviour extends ActivityWithToolbar
 		if(behaviourId == -1)
 		{
 			behaviourId = BehavioursManager.getBehaviourLength();
-			BehavioursManager.addBehaviour(new Behaviour().defaultBehaviour());
+			BehavioursManager.addBehaviour(new Behaviour(behaviourId).defaultBehaviour());
 			BehavioursManager.saveBehaviours();
 		}
 		

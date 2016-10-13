@@ -16,6 +16,7 @@ public interface Action
 	}
 	
 	int ACTION_NOTIFICATION = 0;
+	int ACTION_SOUND_MODE = 1;
 	
 	ActionType getActionType();
 	

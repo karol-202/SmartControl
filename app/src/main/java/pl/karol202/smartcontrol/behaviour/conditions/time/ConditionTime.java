@@ -18,7 +18,7 @@ import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTimeTime.Whic
 
 import java.util.Calendar;
 
-public class ConditionTime implements Condition
+public class ConditionTime extends Condition
 {
 	public static class ConditionTimeReceiver extends BroadcastReceiver
 	{
@@ -49,22 +49,17 @@ public class ConditionTime implements Condition
 	private Time endTime;
 	private boolean precise;
 	
-	private int behaviourId;
-	private int conditionId;
-	private Behaviour behaviour;
 	private PendingIntent piStart;
 	private PendingIntent piEnd;
 	
-	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour)
+	public ConditionTime(Behaviour behaviour, int conditionId)
 	{
-		this.behaviourId = behaviourId;
-		this.conditionId = conditionId;
-		this.behaviour = behaviour;
+		super(behaviour, conditionId);
 	}
 	
-	public ConditionTime(int behaviourId, int conditionId, Behaviour behaviour, Time startTime, Time endTime, boolean precise)
+	public ConditionTime(Behaviour behaviour, int conditionId, Time startTime, Time endTime, boolean precise)
 	{
-		this(behaviourId, conditionId, behaviour);
+		this(behaviour, conditionId);
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.precise = precise;
@@ -110,7 +105,7 @@ public class ConditionTime implements Condition
 	public void registerCondition()
 	{
 		Bundle bundle = new Bundle();
-		bundle.putInt("behaviourId", behaviourId);
+		bundle.putInt("behaviourId", behaviour.getBehaviourId());
 		bundle.putInt("conditionId", conditionId);
 		
 		Intent intentStart = new Intent(context, ConditionTimeReceiver.class);
