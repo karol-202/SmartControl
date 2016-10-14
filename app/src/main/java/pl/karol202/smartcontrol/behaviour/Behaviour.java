@@ -3,6 +3,7 @@ package pl.karol202.smartcontrol.behaviour;
 import android.content.SharedPreferences;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
+import pl.karol202.smartcontrol.behaviour.actions.bluetooth.ActionBluetooth;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode;
 import pl.karol202.smartcontrol.behaviour.actions.wifi.ActionWifi;
@@ -138,6 +139,9 @@ public class Behaviour implements OnConditionChangedListener
 			break;
 		case Action.ACTION_WIFI:
 			action = new ActionWifi();
+			break;
+		case Action.ACTION_BLUETOOTH:
+			action = new ActionBluetooth();
 			break;
 		default:
 			throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");

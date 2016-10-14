@@ -2,6 +2,7 @@
 <manifest package="pl.karol202.smartcontrol"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	
@@ -33,6 +34,9 @@
 			android:label="@string/title_activity_edit_action"/>
 		
 		<activity android:name=".behaviour.actions.wifi.ActivityEditActionWifi"
+			android:label="@string/title_activity_edit_action"/>
+		
+		<activity android:name=".behaviour.actions.bluetooth.ActivityEditActionBluetooth"
 			android:label="@string/title_activity_edit_action"/>
 		
 		<receiver android:name=".behaviour.conditions.time.ConditionTime$ConditionTimeReceiver"/>

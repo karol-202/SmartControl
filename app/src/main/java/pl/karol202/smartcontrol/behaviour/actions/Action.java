@@ -18,6 +18,8 @@ public interface Action
 	int ACTION_NOTIFICATION = 0;
 	int ACTION_SOUND_MODE = 1;
 	int ACTION_WIFI = 2;
+	int ACTION_BLUETOOTH = 3;
+	int ACTION_DATA = 4;
 	
 	ActionType getActionType();
 	

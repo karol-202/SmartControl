@@ -1,8 +1,11 @@
 package pl.karol202.smartcontrol.behaviour.actions.soundmode;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.os.Build;
+import android.provider.Settings;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
 import pl.karol202.smartcontrol.behaviour.actions.ActionType;
@@ -98,6 +101,15 @@ public class ActionSoundMode implements Action
 	{
 		audioManager.setRingerMode(soundMode.getRingerMode());
 		if(soundMode == SoundMode.NORMAL) audioManager.setStreamVolume(AudioManager.STREAM_RING, volume + 1, 0);
+		
+		if(Build.VERSION.SDK_INT >= 17)
+		{
+			Settings.Global.putInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 1);// Turning ON/OFF Airplane mode.
+			
+			Intent intent = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);// creating intent and Specifying action for AIRPLANE mode.
+			intent.putExtra("state", false);// indicate the "state" of airplane mode is changed to ON/OFF
+			context.sendBroadcast(intent);// Broadcasting and Intent
+		}
 	}
 	
 	@Override

@@ -63,4 +63,10 @@
 	<string name="action_wifi_name">Wi-Fi</string>
 	<string name="action_wifi_enabled">Wi-Fi włączone</string>
 	<string name="action_wifi_disabled">Wi-Fi wyłączone</string>
+	
+	<string name="action_bluetooth_name">Bluetooth</string>
+	<string name="action_bluetooth_enabled">Bluetooth włączony</string>
+	<string name="action_bluetooth_disabled">Bluetooth wyłączony</string>
+	
+	<string name="action_data_name">Transmisja danych</string>
 </resources>

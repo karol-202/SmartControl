@@ -10,6 +10,7 @@ import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.ActivityEditBehaviour;
 import pl.karol202.smartcontrol.behaviour.AdapterBehaviours;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
+import pl.karol202.smartcontrol.behaviour.actions.bluetooth.ActionBluetooth;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode;
 import pl.karol202.smartcontrol.behaviour.actions.wifi.ActionWifi;
@@ -36,6 +37,7 @@ public class ActivityMain extends ActivityWithToolbar
 		ActionNotification.init(this);
 		ActionSoundMode.init(this);
 		ActionWifi.init(this);
+		ActionBluetooth.init(this);
 		BehavioursManager.init(this);
 		BehavioursManager.registerConditions();
 		
