@@ -1,9 +1,11 @@
 package pl.karol202.smartcontrol.behaviour;
 
 import android.content.SharedPreferences;
+import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.actions.Action;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode;
+import pl.karol202.smartcontrol.behaviour.actions.wifi.ActionWifi;
 import pl.karol202.smartcontrol.behaviour.conditions.Condition;
 import pl.karol202.smartcontrol.behaviour.conditions.OnConditionChangedListener;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
@@ -12,8 +14,32 @@ import java.util.ArrayList;
 
 public class Behaviour implements OnConditionChangedListener
 {
+	public enum BehaviourIcon
+	{
+		TIME(R.drawable.ic_beh_time_black_48dp),
+		NIGHT(R.drawable.ic_beh_night_black_48dp);
+		
+		private int resource;
+		
+		BehaviourIcon(int resource)
+		{
+			this.resource = resource;
+		}
+		
+		public static BehaviourIcon getById(int id)
+		{
+			if(id == -1 || id >= values().length) throw new RuntimeException("No such sound icon: " + id);
+			return values()[id];
+		}
+		
+		public int getResource()
+		{
+			return resource;
+		}
+	}
+	
 	private String name;
-	private int icon;
+	private BehaviourIcon icon;
 	private boolean enabled;
 	private ArrayList<Condition> conditions;
 	private ArrayList<Action> actionsStart;
@@ -31,7 +57,7 @@ public class Behaviour implements OnConditionChangedListener
 		this.behaviourId = behaviourId;
 	}
 	
-	public Behaviour(int behaviourId, String name, int icon, boolean enabled)
+	public Behaviour(int behaviourId, String name, BehaviourIcon icon, boolean enabled)
 	{
 		this.name = name;
 		this.icon = icon;
@@ -45,7 +71,7 @@ public class Behaviour implements OnConditionChangedListener
 	public Behaviour defaultBehaviour()
 	{
 		name = "Nowe zachowanie";
-		icon = 0;
+		icon = BehaviourIcon.TIME;
 		enabled = true;
 		conditions.clear();
 		actionsStart.clear();
@@ -59,7 +85,7 @@ public class Behaviour implements OnConditionChangedListener
 		String header = "behaviour" + behaviourId;
 		
 		behaviour.setName(prefs.getString(header + "name", ""));
-		behaviour.setIcon(prefs.getInt(header + "icon", -1));
+		behaviour.setIcon(BehaviourIcon.getById(prefs.getInt(header + "icon", -1)));
 		behaviour.setEnabled(prefs.getBoolean(header + "enabled", false));
 		
 		int conditionsLength = prefs.getInt(header + "conditionsLength", 0);
@@ -110,6 +136,9 @@ public class Behaviour implements OnConditionChangedListener
 		case Action.ACTION_SOUND_MODE:
 			action = new ActionSoundMode();
 			break;
+		case Action.ACTION_WIFI:
+			action = new ActionWifi();
+			break;
 		default:
 			throw new RuntimeException("Error during loading behaviour: invalid action type " + type + ".");
 		}
@@ -121,7 +150,7 @@ public class Behaviour implements OnConditionChangedListener
 	{
 		String header = "behaviour" + behaviourId;
 		editor.putString(header + "name", name);
-		editor.putInt(header + "icon", icon);
+		editor.putInt(header + "icon", icon.ordinal());
 		editor.putBoolean(header + "enabled", enabled);
 		
 		editor.putInt(header + "conditionsLength", conditions.size());
@@ -195,12 +224,12 @@ public class Behaviour implements OnConditionChangedListener
 		this.name = name;
 	}
 	
-	public int getIcon()
+	public BehaviourIcon getIcon()
 	{
 		return icon;
 	}
 	
-	public void setIcon(int icon)
+	public void setIcon(BehaviourIcon icon)
 	{
 		this.icon = icon;
 	}

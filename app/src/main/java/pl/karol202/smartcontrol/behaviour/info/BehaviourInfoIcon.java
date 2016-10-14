@@ -8,6 +8,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.Behaviour;
+import pl.karol202.smartcontrol.behaviour.Behaviour.BehaviourIcon;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.behaviour.OnBehaviourChangeListener;
 
@@ -31,7 +32,7 @@ public class BehaviourInfoIcon extends BehaviourInfoProperty
 	public void initView(View view)
 	{
 		ImageView imageView = (ImageView) view.findViewById(R.id.image_behaviour_icon);
-		imageView.setImageResource(behaviour.getIcon());
+		imageView.setImageResource(behaviour.getIcon().getResource());
 	}
 	
 	@Override
@@ -49,7 +50,7 @@ public class BehaviourInfoIcon extends BehaviourInfoProperty
 		AdapterDialogIcon adapter = new AdapterDialogIcon(context);
 		gridView.setAdapter(adapter);
 		gridView.setOnItemClickListener((parent, view1, position, id) -> {
-			behaviour.setIcon((Integer) adapter.getItem(position));
+			behaviour.setIcon((BehaviourIcon) adapter.getItem(position));
 			BehavioursManager.saveBehaviours();
 			listener.onBehaviourChange();
 			dialog.dismiss();

@@ -1,4 +1,4 @@
-package pl.karol202.smartcontrol.behaviour.actions.soundmode;
+package pl.karol202.smartcontrol.behaviour.actions.wifi;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
 
-public class ActionSoundModeType extends ActionSoundModeProperty<ActionSoundModeType.ViewHolderType>
+public class ActionWifiType extends ActionWifiProperty<ActionWifiType.ViewHolderType>
 {
 	class ViewHolderType extends RecyclerView.ViewHolder
 	{
@@ -17,16 +17,16 @@ public class ActionSoundModeType extends ActionSoundModeProperty<ActionSoundMode
 		public ViewHolderType(View view)
 		{
 			super(view);
-			textType = (TextView) view.findViewById(R.id.text_action_sound_mode_type_value);
+			textType = (TextView) view.findViewById(R.id.text_action_wifi_type_value);
 		}
 		
-		public void bind(ActionSoundMode action)
+		public void bind(ActionWifi action)
 		{
 			textType.setText(action.getName());
 		}
 	}
 	
-	public ActionSoundModeType(ActionSoundMode action, Context context)
+	public ActionWifiType(ActionWifi action, Context context)
 	{
 		super(action, context);
 	}
@@ -34,7 +34,7 @@ public class ActionSoundModeType extends ActionSoundModeProperty<ActionSoundMode
 	@Override
 	public ViewHolderType createViewHolder(ViewGroup parent)
 	{
-		View view = LayoutInflater.from(context).inflate(R.layout.list_action_sound_mode_type_row, parent, false);
+		View view = LayoutInflater.from(context).inflate(R.layout.list_action_wifi_type_row, parent, false);
 		return new ViewHolderType(view);
 	}
 	

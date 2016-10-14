@@ -12,6 +12,7 @@ import pl.karol202.smartcontrol.behaviour.AdapterBehaviours;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.behaviour.actions.notification.ActionNotification;
 import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode;
+import pl.karol202.smartcontrol.behaviour.actions.wifi.ActionWifi;
 import pl.karol202.smartcontrol.behaviour.conditions.time.ConditionTime;
 import pl.karol202.smartcontrol.util.ItemDecorationDivider;
 
@@ -34,6 +35,7 @@ public class ActivityMain extends ActivityWithToolbar
 		ConditionTime.init(this);
 		ActionNotification.init(this);
 		ActionSoundMode.init(this);
+		ActionWifi.init(this);
 		BehavioursManager.init(this);
 		BehavioursManager.registerConditions();
 		

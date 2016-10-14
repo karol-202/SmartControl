@@ -7,20 +7,21 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.Behaviour;
 
 import java.util.ArrayList;
 
 public class AdapterDialogIcon extends BaseAdapter
 {
 	private Context context;
-	private ArrayList<Integer> icons;
+	private ArrayList<Behaviour.BehaviourIcon> icons;
 	
 	public AdapterDialogIcon(Context context)
 	{
 		this.context = context;
 		this.icons = new ArrayList<>();
-		this.icons.add(R.drawable.ic_beh_time_black_48dp);
-		this.icons.add(R.drawable.ic_beh_night_black_48dp);
+		this.icons.add(Behaviour.BehaviourIcon.TIME);
+		this.icons.add(Behaviour.BehaviourIcon.NIGHT);
 	}
 	
 	@Override
@@ -52,7 +53,7 @@ public class AdapterDialogIcon extends BaseAdapter
 		}
 		else view = (ImageView) convertView;
 		
-		view.setImageResource(icons.get(position));
+		view.setImageResource(icons.get(position).getResource());
 		
 		return view;
 	}

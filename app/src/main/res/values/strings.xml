@@ -40,6 +40,7 @@
 	
 	<string name="condition_type">Warunek</string>
 	
+	<string name="condition_time_name">Przedział czasowy</string>
 	<string name="condition_time_start">Czas rozpoczęcia</string>
 	<string name="condition_time_end">Czas zakończenia</string>
 	<string name="condition_time_precise">Wysoka dokładność</string>
@@ -48,18 +49,18 @@
 	
 	<string name="action_type">Rodzaj efektu</string>
 	
+	<string name="action_notification_name">Powiadomienie</string>
 	<string name="action_notification_text">Treść powiadomienia</string>
 	<string name="action_notification_text_example">Powiadomienie</string>
 	
+	<string name="action_sound_mode_name">Głośność</string>
 	<string name="action_sound_mode_mode">Tryb dźwięku</string>
 	<string name="action_sound_mode_volume">Głośność</string>
-	
-	<string name="condition_time_name">Przedział czasowy</string>
-	
-	<string name="action_notification_name">Powiadomienie</string>
-	<string name="action_sound_mode_name">Głośność</string>
-	
 	<string name="sound_mode_normal">Normalny</string>
 	<string name="sound_mode_vibrate">Wibracje</string>
 	<string name="sound_mode_silent">Wyciszenie</string>
+
+	<string name="action_wifi_name">Wi-Fi</string>
+	<string name="action_wifi_enabled">Wi-Fi włączone</string>
+	<string name="action_wifi_disabled">Wi-Fi wyłączone</string>
 </resources>

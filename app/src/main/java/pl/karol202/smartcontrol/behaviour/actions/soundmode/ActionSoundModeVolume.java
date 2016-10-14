@@ -10,6 +10,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
+import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 
 public class ActionSoundModeVolume extends ActionSoundModeProperty<ActionSoundModeVolume.ViewHolderType>
 {
@@ -29,6 +30,7 @@ public class ActionSoundModeVolume extends ActionSoundModeProperty<ActionSoundMo
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
 				{
 					action.setVolume(progress);
+					BehavioursManager.saveBehaviours();
 				}
 				
 				@Override

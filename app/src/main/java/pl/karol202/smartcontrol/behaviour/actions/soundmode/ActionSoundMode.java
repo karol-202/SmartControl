@@ -104,12 +104,14 @@ public class ActionSoundMode implements Action
 	public void loadAction(SharedPreferences prefs, String header)
 	{
 		soundMode = SoundMode.getById(prefs.getInt(header + "soundmode", -1));
+		volume = prefs.getInt(header + "volume", 0);
 	}
 	
 	@Override
 	public void saveAction(SharedPreferences.Editor editor, String header)
 	{
 		editor.putInt(header + "soundmode", soundMode.ordinal());
+		editor.putInt(header + "volume", volume);
 	}
 	
 	public static AudioManager getAudioManager()

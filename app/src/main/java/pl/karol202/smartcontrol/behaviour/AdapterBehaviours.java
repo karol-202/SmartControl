@@ -39,7 +39,7 @@ public class AdapterBehaviours extends RecyclerView.Adapter<AdapterBehaviours.Vi
 		{
 			this.position = position;
 			this.behaviour = behaviour;
-			imageIcon.setImageResource(behaviour.getIcon());
+			imageIcon.setImageResource(behaviour.getIcon().getResource());
 			textName.setText(behaviour.getName());
 			switchEnabled.setChecked(behaviour.isEnabled());
 		}
