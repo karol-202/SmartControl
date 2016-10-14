@@ -12,14 +12,14 @@ import android.widget.TextView;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 
-public class ActionSoundModeVolume extends ActionSoundModeProperty<ActionSoundModeVolume.ViewHolderType>
+public class ActionSoundModeVolume extends ActionSoundModeProperty<ActionSoundModeVolume.ViewHolderVolume>
 {
-	class ViewHolderType extends RecyclerView.ViewHolder
+	class ViewHolderVolume extends RecyclerView.ViewHolder
 	{
 		private TextView volumeText;
 		private SeekBar seekBar;
 		
-		public ViewHolderType(View view)
+		public ViewHolderVolume(View view)
 		{
 			super(view);
 			volumeText = (TextView) view.findViewById(R.id.text_action_sound_mode_volume);
@@ -55,15 +55,15 @@ public class ActionSoundModeVolume extends ActionSoundModeProperty<ActionSoundMo
 	}
 	
 	@Override
-	public ViewHolderType createViewHolder(ViewGroup parent)
+	public ViewHolderVolume createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(context).inflate(R.layout.list_action_sound_mode_volume_row, parent, false);
-		return new ViewHolderType(view);
+		return new ViewHolderVolume(view);
 	}
 	
 	@Override
 	public void bindViewHolder(RecyclerView.ViewHolder holder)
 	{
-		((ViewHolderType) holder).bind(action);
+		((ViewHolderVolume) holder).bind(action);
 	}
 }

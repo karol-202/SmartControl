@@ -12,13 +12,13 @@ import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 import pl.karol202.smartcontrol.behaviour.actions.OnActionChangedListener;
 import pl.karol202.smartcontrol.behaviour.actions.soundmode.ActionSoundMode.SoundMode;
 
-public class ActionSoundModeMode extends ActionSoundModeProperty<ActionSoundModeMode.ViewHolderType>
+public class ActionSoundModeMode extends ActionSoundModeProperty<ActionSoundModeMode.ViewHolderMode>
 {
-	class ViewHolderType extends RecyclerView.ViewHolder
+	class ViewHolderMode extends RecyclerView.ViewHolder
 	{
 		private TextView textMode;
 		
-		public ViewHolderType(View view)
+		public ViewHolderMode(View view)
 		{
 			super(view);
 			view.setOnClickListener(v -> showDialog());
@@ -40,16 +40,16 @@ public class ActionSoundModeMode extends ActionSoundModeProperty<ActionSoundMode
 	}
 	
 	@Override
-	public ViewHolderType createViewHolder(ViewGroup parent)
+	public ViewHolderMode createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(context).inflate(R.layout.list_action_sound_mode_mode_row, parent, false);
-		return new ViewHolderType(view);
+		return new ViewHolderMode(view);
 	}
 	
 	@Override
 	public void bindViewHolder(RecyclerView.ViewHolder holder)
 	{
-		((ViewHolderType) holder).bind(action);
+		((ViewHolderMode) holder).bind(action);
 	}
 	
 	private void showDialog()

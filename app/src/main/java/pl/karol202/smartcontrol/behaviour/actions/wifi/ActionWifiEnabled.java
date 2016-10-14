@@ -9,13 +9,13 @@ import android.widget.Switch;
 import pl.karol202.smartcontrol.R;
 import pl.karol202.smartcontrol.behaviour.BehavioursManager;
 
-public class ActionWifiEnabled extends ActionWifiProperty<ActionWifiEnabled.ViewHolderType>
+public class ActionWifiEnabled extends ActionWifiProperty<ActionWifiEnabled.ViewHolderEnabled>
 {
-	class ViewHolderType extends RecyclerView.ViewHolder
+	class ViewHolderEnabled extends RecyclerView.ViewHolder
 	{
 		private Switch switchEnabled;
 		
-		public ViewHolderType(View view)
+		public ViewHolderEnabled(View view)
 		{
 			super(view);
 			switchEnabled = (Switch) view.findViewById(R.id.switch_action_wifi_enabled);
@@ -37,15 +37,15 @@ public class ActionWifiEnabled extends ActionWifiProperty<ActionWifiEnabled.View
 	}
 	
 	@Override
-	public ViewHolderType createViewHolder(ViewGroup parent)
+	public ViewHolderEnabled createViewHolder(ViewGroup parent)
 	{
 		View view = LayoutInflater.from(context).inflate(R.layout.list_action_wifi_enabled_row, parent, false);
-		return new ViewHolderType(view);
+		return new ViewHolderEnabled(view);
 	}
 	
 	@Override
 	public void bindViewHolder(RecyclerView.ViewHolder holder)
 	{
-		((ViewHolderType) holder).bind(action);
+		((ViewHolderEnabled) holder).bind(action);
 	}
 }
